@@ -1,0 +1,46 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+
+// Blog posts, no drafts, sorted from newest to oldest.
+const data = (await getCollection("blog"))
+  .filter((post) => !post.data.isDraft)
+  .sort(
+    (a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf(),
+  );
+
+type Posts = {
+  [year: string]: CollectionEntry<"blog">[];
+};
+
+const posts: Posts = {};
+
+// Group each post by its year.
+data.forEach((post) => {
+  const year = post.data.publishedDate.getFullYear().toString();
+  if (!posts[year]) {
+    posts[year] = [];
+  }
+  posts[year].push(post);
+});
+
+// Object with only years to iterate over.
+const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
+---
+
+<BaseLayout>
+  {years.map((year: string) => (
+    <div>{year}</div>
+
+    <ul>
+      {posts[year].map(post => (
+        <li>
+          <p>{post.data.title}</p>
+          <p>Desc: {post.data.description}</p>
+          <p>Published On: {post.data.publishedDate}</p>
+        </li>
+      ))}
+    </ul>
+  ))}
+</BaseLayout>

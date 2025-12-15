@@ -9,7 +9,9 @@ type BlogPostCollectionEntry = CollectionEntry<"blog">;
 // Generate all prerendered html pages for each blog entry
 export const getStaticPaths: GetStaticPaths = async () => {
   // Fetch all blog posts using the API for creating all prerendered pages
-  const blogPosts: BlogPostCollectionEntry[] = await getCollection("blog");
+  const blogPosts: BlogPostCollectionEntry[] = (
+    await getCollection("blog")
+  ).filter((post) => !post.data.isDraft);
 
   // Use slug from frontmatter for prerendered page params
   // Also pass all frontmatter to each blog post.
