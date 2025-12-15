@@ -1,0 +1,26 @@
+import type { BaseSchema, CollectionConfig } from "astro/content/config";
+import { defineCollection, z } from "astro:content";
+
+const blogSchema = z.object({
+  slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Invalid slug"),
+  title: z.string(),
+  description: z.string(),
+  summary: z.string(),
+  publishedDate: z.coerce.date(),
+  updatedDate: z.coerce.date(),
+  heroImage: z.object({
+    src: z.string(),
+    alt: z.string(),
+  }).optional(),
+  isDraft: z.boolean().default(false),
+  tags: z.array(z.string()).default([])
+})
+
+const blogCollectionConfig: CollectionConfig<BaseSchema> = {
+  type: "content",
+  schema: blogSchema
+}
+
+const blogCollection = defineCollection(blogCollectionConfig)
+
+export const collections = { "blog": blogCollection };
