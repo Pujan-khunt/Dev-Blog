@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+type BlogPostCollectionEntry = CollectionEntry<"blog">;
+
+// Generate all prerendered html pages for each blog entry
+export const getStaticPaths: GetStaticPaths = async () => {
+  // Fetch all blog posts using the API for creating all prerendered pages
+  const blogPosts: BlogPostCollectionEntry[] = await getCollection("blog");
+
+  // Use slug from frontmatter for prerendered page params
+  // Also pass all frontmatter to each blog post.
+  return blogPosts.map((post: BlogPostCollectionEntry) => ({
+    // The slug comes from frontmatter but isn't part of the schema due to collision of types.
+    // Mention the slug explicitly in each post, but don't consider it in the schema.
+    params: { slug: post.slug },
+    props: { blogPostCollectionEntry: post },
+  }));
+};
+
+// Explicitly infer type of blog post collection entry
+type Props = {
+  blogPostCollectionEntry: BlogPostCollectionEntry;
+};
+
+// Blog post frontmatter recieved by this component
+const { blogPostCollectionEntry } = Astro.props as Props;
+
+// Frontmatter data
+const post: BlogPostCollectionEntry["data"] = blogPostCollectionEntry.data;
+
+if (!post) {
+  throw new Error("No such post found");
+}
+
+// Markdown content from blog post.
+const { Content } = await blogPostCollectionEntry.render();
+---
+
+<BaseLayout>
+  <article>
+    <img src={post.heroImage?.src} alt={post.heroImage?.alt}/>
+    <h1>{post.title}</h1>
+    <p>{post.description}</p>
+    <div><Content/></div>
+  </article>
+</BaseLayout>

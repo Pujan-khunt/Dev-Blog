@@ -1,8 +1,9 @@
-import type { BaseSchema, CollectionConfig } from "astro/content/config";
+import type { CollectionConfig } from "astro/content/config";
 import { defineCollection, z } from "astro:content";
 
 const blogSchema = z.object({
-  slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Invalid slug"),
+  // Removed so Astro uses slug from frontmatter to populate CollectionEntry<"blog">
+  // slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Invalid slug"),
   title: z.string(),
   description: z.string(),
   summary: z.string(),
@@ -16,7 +17,7 @@ const blogSchema = z.object({
   tags: z.array(z.string()).default([])
 })
 
-const blogCollectionConfig: CollectionConfig<BaseSchema> = {
+const blogCollectionConfig: CollectionConfig<typeof blogSchema> = {
   type: "content",
   schema: blogSchema
 }
