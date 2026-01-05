@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect fill="#004E66" width="1200" height="630"/>
+  <rect fill="#FF9900" x="100" y="100" width="1000" height="430" rx="20" opacity="0.1"/>
+  <text fill="#FF9900" font-family="Inter, sans-serif" font-size="72" font-weight="bold" x="50%" y="45%" text-anchor="middle" dy=".3em">DevBlog</text>
+  <text fill="#FFFFFF" font-family="Inter, sans-serif" font-size="32" x="50%" y="58%" text-anchor="middle">Technical Insights & Tutorials</text>
+</svg>

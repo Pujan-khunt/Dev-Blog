@@ -1,0 +1,31 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+---
+
+<nav class="sticky top-24 max-h-[calc(100vh-6rem)] overflow-auto hidden lg:block">
+  <h4 class="text-sm font-semibold text-secondary dark:text-primary mb-4 uppercase tracking-wider">
+    On this page
+  </h4>
+  <ul class="space-y-2 border-l-2 border-bg-secondary dark:border-bg-secondary">
+    {headings.filter(h => h.depth <= 3).map((heading) => (
+      <li class={`${heading.depth === 3 ? 'ml-4' : ''}`}>
+        <a
+          href={`#${heading.slug}`}
+          class="block pl-4 py-1 text-sm text-text-muted hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors border-l-2 border-transparent hover:border-primary -ml-[2px]"
+        >
+          {heading.text}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
