@@ -2,7 +2,7 @@ import type { CollectionConfig } from "astro/content/config";
 import { defineCollection, z } from "astro:content";
 
 const blogSchema = z.object({
-  // Removed so Astro uses slug from frontmatter to populate CollectionEntry<"blog">
+  // Removed so Astro uses filename without extension for the URL when building statically.
   // slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Invalid slug"),
   title: z.string(),
   description: z.string(),
