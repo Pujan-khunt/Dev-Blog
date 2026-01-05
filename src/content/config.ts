@@ -9,19 +9,21 @@ const blogSchema = z.object({
   summary: z.string(),
   publishedDate: z.coerce.date(),
   updatedDate: z.coerce.date(),
-  heroImage: z.object({
-    src: z.string(),
-    alt: z.string(),
-  }).optional(),
+  heroImage: z
+    .object({
+      src: z.string(),
+      alt: z.string(),
+    })
+    .optional(),
   isDraft: z.boolean().default(false),
-  tags: z.array(z.string()).default([])
-})
+  tags: z.array(z.string()).default([]),
+});
 
 const blogCollectionConfig: CollectionConfig<typeof blogSchema> = {
   type: "content",
-  schema: blogSchema
-}
+  schema: blogSchema,
+};
 
-const blogCollection = defineCollection(blogCollectionConfig)
+const blogCollection = defineCollection(blogCollectionConfig);
 
-export const collections = { "blog": blogCollection };
+export const collections = { blog: blogCollection };

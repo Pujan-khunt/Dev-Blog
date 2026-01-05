@@ -44,9 +44,9 @@ const { Content } = await blogPostCollectionEntry.render();
 
 <BaseLayout>
   <article>
-    <img src={post.heroImage?.src} alt={post.heroImage?.alt}/>
+    <img src={post.heroImage?.src} alt={post.heroImage?.alt} />
     <h1>{post.title}</h1>
     <p>{post.description}</p>
-    <div><Content/></div>
+    <div><Content /></div>
   </article>
 </BaseLayout>

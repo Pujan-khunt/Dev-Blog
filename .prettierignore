@@ -1,0 +1,4 @@
+# node_modules and .git are automatically included
+dist/
+.astro/
+
