@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary: #f05d5e;
+  --color-background-light: #f8f6f6;
+  --color-background-dark: #0b0c0e;
+  --color-surface: #14161a;
+  --color-text-main: #ebecef;
+  --color-text-muted: #737987;
+  --color-border-color: #232730;
+
+  --font-display: Space Grotesk, sans-serif;
+  --font-body: General Sans, system-ui, sans-serif;
+  --font-mono: JetBrains Mono, monospace;
+
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-full: 0px;
+
+  --container-reading: 680px;
+  --container-code: 800px;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+body {
+    background-color: var(--color-background-dark);
+    color: var(--color-text-main);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Grayscale image transition */
+.img-grayscale {
+    filter: grayscale(100%);
+    transition: filter 300ms ease-in-out;
+}
+.img-grayscale:hover {
+    filter: grayscale(0%);
+}
+
+/* Syntax highlighting simulation */
+.token.keyword { color: #c678dd; }
+.token.function { color: #61afef; }
+.token.string { color: #98c379; }
+.token.comment { color: #5c6370; font-style: italic; }
+.token.operator { color: #56b6c2; }
+.token.punctuation { color: #abb2bf; }
+.token.class-name { color: #e5c07b; }

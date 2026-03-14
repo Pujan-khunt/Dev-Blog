@@ -1,0 +1,63 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary: #f05d5e;
+  --color-background-light: #ebecef;
+  --color-background-dark: #0b0c0e;
+  --color-surface: #14161a;
+  --color-text-main: #ebecef;
+  --color-muted: #737987;
+  --color-border-color: #232730;
+
+  --font-display: Space Grotesk, sans-serif;
+  --font-body: Inter, sans-serif;
+  --font-mono: JetBrains Mono, monospace;
+
+  --radius-none: 0px;
+  --radius: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-full: 0px;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+body {
+  background-color: var(--color-background-dark);
+  color: var(--color-text-main);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tag Hover Effects */
+.nav-tag:hover .bracket { color: var(--color-text-main); }
+.nav-tag:hover .text { color: var(--color-primary); }
+
+/* Hide scrollbar for mobile nav */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

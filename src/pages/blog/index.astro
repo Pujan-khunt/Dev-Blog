@@ -1,91 +1,260 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
+import "../../styles/blog-theme.css";
 
-const data = (await getCollection("blog"))
-  .filter((post) => !post.data.isDraft)
-  .sort(
-    (a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf(),
-  );
+const rustCode = `<code class="language-rust"><span class="token keyword">pub enum</span> <span class="token class-name">NodeState</span> {
+    <span class="token class-name">Follower</span>,
+    <span class="token class-name">Candidate</span>,
+    <span class="token class-name">Leader</span>,
+}
 
-type Posts = {
-  [year: string]: CollectionEntry<"blog">[];
-};
+<span class="token keyword">pub struct</span> <span class="token class-name">RaftNode</span> {
+    <span class="token comment">// Persistent state on all servers</span>
+    current_term: <span class="token class-name">u64</span>,
+    voted_for: <span class="token class-name">Option</span>&lt;<span class="token class-name">NodeId</span>&gt;,
+    log: <span class="token class-name">Vec</span>&lt;<span class="token class-name">LogEntry</span>&gt;,
 
-const posts: Posts = {};
-
-data.forEach((post) => {
-  const year = post.data.publishedDate.getFullYear().toString();
-  if (!posts[year]) {
-    posts[year] = [];
-  }
-  posts[year].push(post);
-});
-
-const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
-
-const title = "Blog | DevBlog";
-const description = "A collection of thoughts on software development, coding, and technology.";
+    <span class="token comment">// Volatile state on all servers</span>
+    commit_index: <span class="token class-name">u64</span>,
+    last_applied: <span class="token class-name">u64</span>,
+    
+    <span class="token comment">// Current operational state</span>
+    state: <span class="token class-name">NodeState</span>,
+}</code>`;
 ---
 
-<BaseLayout title={title} description={description}>
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <header class="mb-12">
-      <h1 class="text-4xl sm:text-5xl font-bold text-secondary dark:text-primary mb-4">
-        Blog
-      </h1>
-      <p class="text-lg text-text-muted dark:text-gray-400">
-        Thoughts on software development, coding, and technology.
-      </p>
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Terminal Ledger - Article View</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col"
+  >
+    <!-- Top Navigation (Reused component, modified for context) -->
+    <header
+      class="w-full border-b border-border-color bg-background-dark/95 backdrop-blur-sm sticky top-0 z-50"
+    >
+      <div
+        class="max-w-[960px] mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <a
+          class="flex items-center gap-3 text-text-main hover:text-primary transition-colors duration-200 group"
+          href="#"
+        >
+          <div class="size-5 text-primary">
+            <svg
+              class="w-full h-full"
+              fill="none"
+              viewBox="0 0 48 48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z"
+                fill="currentColor"></path>
+              <path
+                clip-rule="evenodd"
+                d="M10.4485 13.8519C10.4749 13.9271 10.6203 14.246 11.379 14.7361C12.298 15.3298 13.7492 15.9145 15.6717 16.3735C18.0007 16.9296 20.8712 17.2655 24 17.2655C27.1288 17.2655 29.9993 16.9296 32.3283 16.3735C34.2508 15.9145 35.702 15.3298 36.621 14.7361C37.3796 14.246 37.5251 13.9271 37.5515 13.8519C37.5287 13.7876 37.4333 13.5973 37.0635 13.2931C36.5266 12.8516 35.6288 12.3647 34.343 11.9175C31.79 11.0295 28.1333 10.4437 24 10.4437C19.8667 10.4437 16.2099 11.0295 13.657 11.9175C12.3712 12.3647 11.4734 12.8516 10.9365 13.2931C10.5667 13.5973 10.4713 13.7876 10.4485 13.8519ZM37.5563 18.7877C36.3176 19.3925 34.8502 19.8839 33.2571 20.2642C30.5836 20.9025 27.3973 21.2655 24 21.2655C20.6027 21.2655 17.4164 20.9025 14.7429 20.2642C13.1498 19.8839 11.6824 19.3925 10.4436 18.7877V34.1275C10.4515 34.1545 10.5427 34.4867 11.379 35.027C12.298 35.6207 13.7492 36.2054 15.6717 36.6644C18.0007 37.2205 20.8712 37.5564 24 37.5564C27.1288 37.5564 29.9993 37.2205 32.3283 36.6644C34.2508 36.2054 35.702 35.6207 36.621 35.027C37.4573 34.4867 37.5485 34.1546 37.5563 34.1275V18.7877ZM41.5563 13.8546V34.1455C41.5563 36.1078 40.158 37.5042 38.7915 38.3869C37.3498 39.3182 35.4192 40.0389 33.2571 40.5551C30.5836 41.1934 27.3973 41.5564 24 41.5564C20.6027 41.5564 17.4164 41.1934 14.7429 40.5551C12.5808 40.0389 10.6502 39.3182 9.20848 38.3869C7.84205 37.5042 6.44365 36.1078 6.44365 34.1455L6.44365 13.8546C6.44365 12.2684 7.37223 11.0454 8.39581 10.2036C9.43325 9.3505 10.8137 8.67141 12.343 8.13948C15.4203 7.06909 19.5418 6.44366 24 6.44366C28.4582 6.44366 32.5797 7.06909 35.657 8.13948C37.1863 8.67141 38.5667 9.3505 39.6042 10.2036C40.6278 11.0454 41.5563 12.2684 41.5563 13.8546Z"
+                fill="currentColor"
+                fill-rule="evenodd"></path>
+            </svg>
+          </div>
+          <span
+            class="font-display font-bold text-xl tracking-tight group-hover:text-primary"
+            >The Terminal Ledger</span
+          >
+        </a>
+        <nav class="hidden md:flex items-center gap-8 font-mono text-[13px]">
+          <a
+            class="text-text-muted hover:text-primary transition-colors"
+            href="#"><span>[</span>home<span>]</span></a
+          >
+          <a
+            class="text-text-muted hover:text-primary transition-colors"
+            href="#"><span>[</span>archive<span>]</span></a
+          >
+          <a
+            class="text-text-muted hover:text-primary transition-colors"
+            href="#"><span>[</span>about<span>]</span></a
+          >
+        </nav>
+      </div>
     </header>
-
-    {years.map((year: string) => (
-      <section class="mb-12">
-        <h2 class="text-2xl font-bold text-secondary dark:text-primary mb-6 pb-2 border-b border-bg-secondary dark:border-gray-700">
-          {year}
+    <main class="flex-1 w-full py-16 px-4 md:px-6">
+      <!-- Article Header -->
+      <header class="max-w-reading mx-auto mb-16">
+        <h1
+          class="font-display text-[32px] md:text-[48px] font-semibold leading-tight text-text-main mb-8"
+        >
+          Building Resilient Distributed Systems: A Practical Guide to Raft
+        </h1>
+        <div
+          class="flex flex-wrap items-center gap-x-6 gap-y-2 pb-4 border-b border-border-color font-mono text-[13px] text-text-muted"
+        >
+          <span class="flex items-center gap-2">
+            <span class="text-primary">AUTHOR:</span> Alice Engineer
+          </span>
+          <span class="flex items-center gap-2">
+            <span class="text-primary">DATE:</span> 2023-10-27
+          </span>
+          <span class="flex items-center gap-2">
+            <span class="text-primary">READ_TIME:</span> 14m
+          </span>
+        </div>
+      </header>
+      <!-- Article Content -->
+      <article
+        class="max-w-reading mx-auto space-y-8 text-[18px] leading-[1.6] text-text-main"
+      >
+        <p>
+          Consensus is the heart of any distributed system. When multiple nodes
+          need to agree on a single source of truth—whether it's a database
+          cluster, a configuration manager, or a distributed lock service—things
+          get complicated quickly. Network partitions, node failures, and
+          message delays conspire to create chaos.
+        </p>
+        <p>
+          For years, Paxos was synonymous with distributed consensus. However,
+          Paxos is famously difficult to understand and even harder to implement
+          correctly. In 2013, Diego Ongaro and John Ousterhout introduced <code
+            class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+            >Raft</code
+          >, an algorithm designed explicitly for understandability.
+        </p>
+        <h2
+          class="font-display text-[28px] font-semibold text-text-main mt-16 mb-6"
+        >
+          The Anatomy of a Node
         </h2>
-
-        <ul class="space-y-6">
-          {posts[year].map((post) => (
-            <li class="group">
-              <a
-                href={`/blog/${post.slug}`}
-                class="block p-6 rounded-xl bg-bg-secondary dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300"
+        <p>
+          In Raft, every node in the cluster can be in one of three states: <strong
+            class="text-white font-medium">Follower</strong
+          >, <strong class="text-white font-medium">Candidate</strong>, or <strong
+            class="text-white font-medium">Leader</strong
+          >. All nodes start as Followers. If a Follower hears no communication
+          from a Leader within a randomized timeout period, it transitions to a
+          Candidate and initiates an election.
+        </p>
+        <!-- Full Bleed Code Block -->
+        <div
+          class="relative w-full max-w-code mx-auto -mx-4 sm:mx-auto my-12 group"
+        >
+          <div
+            class="flex items-center justify-between bg-surface border border-b-0 border-border-color px-4 py-2 font-mono text-[13px]"
+          >
+            <span class="text-text-muted">src/node.rs</span>
+            <button
+              aria-label="Copy code"
+              class="text-text-muted hover:text-primary transition-colors focus:outline-none flex items-center gap-1 group/btn"
+            >
+              <span
+                class="material-symbols-outlined text-[16px] group-hover/btn:hidden"
+                >content_copy</span
               >
-                <article>
-                  <div class="flex items-start justify-between gap-4 mb-2">
-                    <h3 class="text-xl font-semibold text-text dark:text-gray-100 group-hover:text-primary dark:group-hover:text-primary transition-colors">
-                      {post.data.title}
-                    </h3>
-                    <time
-                      datetime={post.data.publishedDate.toISOString()}
-                      class="text-sm text-text-muted dark:text-gray-400 whitespace-nowrap"
-                    >
-                      {post.data.publishedDate.toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </time>
-                  </div>
-                  <p class="text-text-muted dark:text-gray-400 mb-4 line-clamp-2">
-                    {post.data.description}
-                  </p>
-                  {post.data.tags && post.data.tags.length > 0 && (
-                    <div class="flex flex-wrap gap-2">
-                      {post.data.tags.map((tag) => (
-                        <span class="text-xs px-2 py-1 rounded-full bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary/80">
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </article>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    ))}
-  </div>
-</BaseLayout>
+              <span class="hidden group-hover/btn:inline text-primary"
+                >[copy]</span
+              >
+            </button>
+          </div>
+          <div
+            class="bg-surface border border-border-color overflow-x-auto p-6 scrollbar-thin scrollbar-thumb-border-color scrollbar-track-transparent"
+          >
+            <pre
+              class="font-mono text-[14px] leading-relaxed text-text-main"
+              set:html={rustCode}
+            />
+          </div>
+        </div>
+        <p>
+          The simplicity of this state machine is deceptive. The interactions
+          between these states, driven by RPC calls (<code
+            class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+            >RequestVote</code
+          > and <code
+            class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+            >AppendEntries</code
+          >), are where the actual consensus is forged.
+        </p>
+        <h3
+          class="font-display text-[24px] font-semibold text-text-main mt-12 mb-4"
+        >
+          Log Replication
+        </h3>
+        <p>
+          Once a Leader is elected, it begins accepting client requests. Each
+          request is a command to be executed by the replicated state machines.
+          The Leader appends the command to its log as a new entry, then issues <code
+            class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+            >AppendEntries</code
+          > RPCs in parallel to each of the other servers to replicate the entry.
+        </p>
+        <!-- Image Figure -->
+        <figure class="my-12">
+          <div class="border border-border-color p-1 bg-surface">
+            <img
+              alt="Abstract representation of distributed network nodes"
+              class="w-full h-auto object-cover img-grayscale max-h-[400px]"
+              data-alt="Server rack network cables"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmPtpPdwSQRjE6y6xuln9JzoRnt3TaW8UJlco8WgMPIQ_1sr9RCSPQ0FUgArCE_QznTeJa9UHxW-eIQS_tYEIRNPJctvGFDqjePOoJyyUakRjHlpcyevz-tPifIsWcsjYA4uKq5S_UQ0UFLq_Qa48zK9aLO3_rRYyrlclgZmIZFHbiLcLUHMRDtsFEKw65kJ2JJ0wDk0xQzRKsOyJ5JlrLHG3R22o4KkvKLDiwpLiFhfPWbggV2kmAyNDnYZkeEk8mWZbI2ylnNzs"
+            />
+          </div>
+          <figcaption
+            class="mt-4 font-mono text-[13px] text-text-muted text-center"
+          >
+            FIG 1. Physical manifestation of a distributed network partition.
+          </figcaption>
+        </figure>
+        <p>
+          When the entry has been safely replicated (meaning a majority of
+          followers have acknowledged it), the leader applies the entry to its
+          state machine and returns the result of that execution to the client.
+          If followers crash or run slowly, or if network packets are lost, the
+          leader retries <code
+            class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+            >AppendEntries</code
+          > RPCs indefinitely until all followers eventually store all log entries.
+        </p>
+        <!-- Terminal output block -->
+        <div class="relative w-full max-w-code mx-auto -mx-4 sm:mx-auto my-12">
+          <div
+            class="bg-background-dark border border-border-color p-6 font-mono text-[14px] leading-relaxed overflow-x-auto text-text-muted"
+          >
+            <pre><code>$ cargo run --bin raft-cluster
+<span class="text-primary">&gt;</span> [NODE-1] Initializing as Follower (Term: 0)
+<span class="text-primary">&gt;</span> [NODE-2] Initializing as Follower (Term: 0)
+<span class="text-primary">&gt;</span> [NODE-3] Initializing as Follower (Term: 0)
+<span class="text-primary">&gt;</span> [NODE-2] Election timeout reached. Transitioning to Candidate.
+<span class="text-primary">&gt;</span> [NODE-2] Requesting votes for Term 1...
+<span class="text-primary">&gt;</span> [NODE-1] Granted vote to NODE-2 for Term 1
+<span class="text-primary">&gt;</span> [NODE-3] Granted vote to NODE-2 for Term 1
+<span class="text-primary">&gt;</span> <span class="text-text-main font-bold">[NODE-2] Elected Leader for Term 1. Commencing heartbeats.</span></code></pre>
+          </div>
+        </div>
+        <p>
+          Implementing this in Rust provides unique advantages. The ownership
+          model ensures that references to log entries are safe across threads,
+          and the type system allows us to encode state transitions elegantly
+          using enums and pattern matching. In the next section, we'll dive into
+          handling network partitions.
+        </p>
+      </article>
+      <!-- Footer / End of article marker -->
+      <div class="max-w-reading mx-auto mt-24 mb-8 flex justify-center">
+        <span class="font-mono text-primary">EOF</span>
+      </div>
+    </main>
+  </body>
+</html>
