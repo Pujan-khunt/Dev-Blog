@@ -2,191 +2,155 @@
 import "../../styles/archive-theme.css";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>The Terminal Ledger - Archive</title>
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=General+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body class="bg-[#0B0C0E] text-[#EBECEF] font-body min-h-screen">
-    <div class="flex h-screen overflow-hidden">
-      <!-- Left Sidebar -->
-      <aside
-        class="w-[280px] shrink-0 border-r border-[#232730] flex flex-col h-full overflow-y-auto"
-      >
-        <div class="p-6 border-b border-[#232730]">
-          <h1
-            class="font-heading text-2xl font-bold tracking-tight text-[#EBECEF]"
+<body class="bg-[#0B0C0E] text-[#EBECEF] font-body min-h-screen">
+  <div class="flex h-screen overflow-hidden">
+    <!-- Left Sidebar -->
+    <aside
+      class="w-[280px] shrink-0 border-r border-[#232730] flex flex-col h-full overflow-y-auto"
+    >
+      <div class="p-6 border-b border-[#232730]">
+        <h1
+          class="font-heading text-2xl font-bold tracking-tight text-[#EBECEF]"
+        >
+          The Terminal Ledger
+        </h1>
+      </div>
+      <div class="p-6 flex flex-col gap-6">
+        <div>
+          <h2
+            class="font-mono text-xs uppercase tracking-widest text-[#737987] mb-4 border-b border-[#232730] pb-2"
           >
-            The Terminal Ledger
-          </h1>
+            Navigation
+          </h2>
+          <ul class="flex flex-col gap-3 font-mono text-sm">
+            <li>
+              <a
+                class="text-[#737987] hover:text-[#EBECEF] transition-colors"
+                href="#">~/home</a
+              >
+            </li>
+            <li>
+              <a
+                class="text-[#737987] hover:text-[#EBECEF] transition-colors"
+                href="#">~/articles</a
+              >
+            </li>
+            <li>
+              <a class="text-[#F05D5E] transition-colors" href="#">~/archive</a>
+            </li>
+            <li>
+              <a
+                class="text-[#737987] hover:text-[#EBECEF] transition-colors"
+                href="#">~/about</a
+              >
+            </li>
+          </ul>
         </div>
-        <div class="p-6 flex flex-col gap-6">
-          <div>
-            <h2
-              class="font-mono text-xs uppercase tracking-widest text-[#737987] mb-4 border-b border-[#232730] pb-2"
-            >
-              Navigation
-            </h2>
-            <ul class="flex flex-col gap-3 font-mono text-sm">
-              <li>
-                <a
-                  class="text-[#737987] hover:text-[#EBECEF] transition-colors"
-                  href="#">~/home</a
-                >
-              </li>
-              <li>
-                <a
-                  class="text-[#737987] hover:text-[#EBECEF] transition-colors"
-                  href="#">~/articles</a
-                >
-              </li>
-              <li>
-                <a class="text-[#F05D5E] transition-colors" href="#"
-                  >~/archive</a
-                >
-              </li>
-              <li>
-                <a
-                  class="text-[#737987] hover:text-[#EBECEF] transition-colors"
-                  href="#">~/about</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h2
-              class="font-mono text-xs uppercase tracking-widest text-[#737987] mb-4 border-b border-[#232730] pb-2"
-            >
-              Tags
-            </h2>
-            <div class="flex flex-col gap-2 font-mono text-sm">
-              <a
-                class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
-                href="#">[rust]</a
-              >
-              <a
-                class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
-                href="#">[architecture]</a
-              >
-              <a class="text-[#F05D5E] font-medium py-1" href="#"
-                >[system-design]</a
-              >
-              <a
-                class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
-                href="#">[performance]</a
-              >
-              <a
-                class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
-                href="#">[databases]</a
-              >
-              <a
-                class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
-                href="#">[devops]</a
-              >
-            </div>
-          </div>
-        </div>
-      </aside>
-      <!-- Right Column -->
-      <main class="flex-1 overflow-y-auto flex justify-center p-8 md:p-12">
-        <div class="max-w-[720px] w-full flex flex-col gap-8">
-          <header class="border-b border-[#232730] pb-6 mb-4">
-            <h2 class="font-mono text-base text-[#F05D5E]">
-              &gt; filtering by: [system-design]
-            </h2>
-          </header>
-          <div class="flex flex-col">
-            <!-- Article Item -->
-            <article
-              class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
-            >
-              <time class="font-mono text-[13px] text-[#737987]"
-                >2023-11-12</time
-              >
-              <h3
-                class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
-              >
-                Scaling the Data Tier: A Pragmatic Approach
-              </h3>
-            </article>
-            <!-- Article Item -->
-            <article
-              class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
-            >
-              <time class="font-mono text-[13px] text-[#737987]"
-                >2023-10-27</time
-              >
-              <h3
-                class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
-              >
-                Event-Driven Architecture in Practice
-              </h3>
-            </article>
-            <!-- Article Item -->
-            <article
-              class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
-            >
-              <time class="font-mono text-[13px] text-[#737987]"
-                >2023-09-05</time
-              >
-              <h3
-                class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
-              >
-                Distributed Caching Strategies for High Traffic
-              </h3>
-            </article>
-            <!-- Article Item -->
-            <article
-              class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
-            >
-              <time class="font-mono text-[13px] text-[#737987]"
-                >2023-08-14</time
-              >
-              <h3
-                class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
-              >
-                Microservices vs Monoliths: A Cost Analysis
-              </h3>
-            </article>
-            <!-- Article Item -->
-            <article
-              class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
-            >
-              <time class="font-mono text-[13px] text-[#737987]"
-                >2023-07-02</time
-              >
-              <h3
-                class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
-              >
-                Designing Idempotent APIs at Scale
-              </h3>
-            </article>
-          </div>
-          <div
-            class="mt-8 flex justify-between font-mono text-sm text-[#737987]"
+        <div>
+          <h2
+            class="font-mono text-xs uppercase tracking-widest text-[#737987] mb-4 border-b border-[#232730] pb-2"
           >
-            <span class="cursor-pointer hover:text-[#EBECEF]">&lt; prev</span>
-            <span>page 1 of 3</span>
-            <span class="cursor-pointer hover:text-[#EBECEF]">next &gt;</span>
+            Tags
+          </h2>
+          <div class="flex flex-col gap-2 font-mono text-sm">
+            <a
+              class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
+              href="#">[rust]</a
+            >
+            <a
+              class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
+              href="#">[architecture]</a
+            >
+            <a class="text-[#F05D5E] font-medium py-1" href="#"
+              >[system-design]</a
+            >
+            <a
+              class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
+              href="#">[performance]</a
+            >
+            <a
+              class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
+              href="#">[databases]</a
+            >
+            <a
+              class="text-[#737987] hover:text-[#EBECEF] transition-colors py-1"
+              href="#">[devops]</a
+            >
           </div>
         </div>
-      </main>
-    </div>
-  </body>
-</html>
+      </div>
+    </aside>
+    <!-- Right Column -->
+    <main class="flex-1 overflow-y-auto flex justify-center p-8 md:p-12">
+      <div class="max-w-[720px] w-full flex flex-col gap-8">
+        <header class="border-b border-[#232730] pb-6 mb-4">
+          <h2 class="font-mono text-base text-[#F05D5E]">
+            &gt; filtering by: [system-design]
+          </h2>
+        </header>
+        <div class="flex flex-col">
+          <!-- Article Item -->
+          <article
+            class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
+          >
+            <time class="font-mono text-[13px] text-[#737987]">2023-11-12</time>
+            <h3
+              class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
+            >
+              Scaling the Data Tier: A Pragmatic Approach
+            </h3>
+          </article>
+          <!-- Article Item -->
+          <article
+            class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
+          >
+            <time class="font-mono text-[13px] text-[#737987]">2023-10-27</time>
+            <h3
+              class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
+            >
+              Event-Driven Architecture in Practice
+            </h3>
+          </article>
+          <!-- Article Item -->
+          <article
+            class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
+          >
+            <time class="font-mono text-[13px] text-[#737987]">2023-09-05</time>
+            <h3
+              class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
+            >
+              Distributed Caching Strategies for High Traffic
+            </h3>
+          </article>
+          <!-- Article Item -->
+          <article
+            class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
+          >
+            <time class="font-mono text-[13px] text-[#737987]">2023-08-14</time>
+            <h3
+              class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
+            >
+              Microservices vs Monoliths: A Cost Analysis
+            </h3>
+          </article>
+          <!-- Article Item -->
+          <article
+            class="py-6 border-b border-[#232730] group hover:bg-[#111317] -mx-4 px-4 transition-colors cursor-pointer flex flex-col gap-2"
+          >
+            <time class="font-mono text-[13px] text-[#737987]">2023-07-02</time>
+            <h3
+              class="font-heading text-[28px] font-semibold leading-tight text-[#EBECEF] group-hover:text-[#F05D5E] transition-colors"
+            >
+              Designing Idempotent APIs at Scale
+            </h3>
+          </article>
+        </div>
+        <div class="mt-8 flex justify-between font-mono text-sm text-[#737987]">
+          <span class="cursor-pointer hover:text-[#EBECEF]">&lt; prev</span>
+          <span>page 1 of 3</span>
+          <span class="cursor-pointer hover:text-[#EBECEF]">next &gt;</span>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>

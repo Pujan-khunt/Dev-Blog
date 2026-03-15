@@ -1,0 +1,33 @@
+---
+import ArticleCard from "./ArticleCard.astro";
+import LoadingStateIndicator from "./LoadingStateIndicator.astro";
+---
+
+<section class="w-full max-w-[720px] pt-8 md:pt-12 px-6 md:px-12 pb-24">
+  <div class="flex flex-col gap-12 md:gap-16">
+    <ArticleCard
+      title="Building a Concurrent Web Server in Rust: A Brutalist Approach"
+      description="Exploring the raw primitives of threading and asynchronous I/O in Rust
+          without relying on heavy frameworks. We examine the standard library,
+          mutexes, and channel communication to serve thousands of requests with
+          minimal overhead."
+    />
+
+    <ArticleCard
+      title="Notes on Distributed Systems Architecture"
+      description="A collection of heuristics and architectural patterns for scaling
+          systems across multiple geographic regions. Focusing on eventual
+          consistency, vector clocks, and gracefully degrading under partition
+failures."
+    />
+
+    <ArticleCard
+      title="Vim as an IDE: The Minimalist Configuration"
+      description="Stripping away bloated plugins to rely on native Vim features. A deep
+          dive into LSP integration, native netrw for file exploring, and
+leveraging the quickfix list for seamless compiler integration."
+    />
+
+    <LoadingStateIndicator />
+  </div>
+</section>
