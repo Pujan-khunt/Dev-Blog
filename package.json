@@ -5,17 +5,11 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "format": "prettier --write ."
+    "preview": "astro preview"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.5",
-    "prettier": "^3.7.4",
-    "prettier-plugin-astro": "^0.14.1",
-    "remark-reading-time": "^2.0.2",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   }

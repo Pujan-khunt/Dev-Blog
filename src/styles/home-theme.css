@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -49,8 +49,12 @@ body {
 }
 
 /* Tag Hover Effects */
-.nav-tag:hover .bracket { color: var(--color-text-main); }
-.nav-tag:hover .text { color: var(--color-primary); }
+.nav-tag:hover .bracket {
+  color: var(--color-text-main);
+}
+.nav-tag:hover .text {
+  color: var(--color-primary);
+}
 
 /* Hide scrollbar for mobile nav */
 .hide-scrollbar::-webkit-scrollbar {
@@ -60,4 +64,3 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-

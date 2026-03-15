@@ -1,0 +1,13 @@
+---
+interface Props {
+  field: string;
+  value: string;
+}
+
+const { field, value } = Astro.props;
+---
+
+<span class="flex items-center gap-2">
+  <span class="text-primary"><span>{field}</span>:</span>
+  <span>{value}</span>
+</span>

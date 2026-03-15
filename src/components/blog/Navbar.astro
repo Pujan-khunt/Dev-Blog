@@ -1,0 +1,47 @@
+---
+import LogoSVG from "./LogoSVG.astro";
+import NavItem from "./NavItem.astro";
+
+const navItems = [
+  {
+    text: "home",
+    href: "/home",
+  },
+  {
+    text: "archive",
+    href: "/archive",
+  },
+  {
+    text: "about",
+    href: "/about",
+  },
+];
+---
+
+<header
+  class="w-full border-b border-border-color bg-background-dark/95 backdrop-blur-sm sticky top-0 z-50"
+>
+  <div
+    class="max-w-[960px] mx-auto px-6 py-4 flex items-center justify-between"
+  >
+    <a
+      class="flex items-center gap-3 text-text-main hover:text-primary transition-colors duration-200 group"
+      href="#"
+    >
+      <div class="size-5 text-primary">
+        <LogoSVG />
+      </div>
+      <span
+        class="font-display font-bold text-xl tracking-tight group-hover:text-primary"
+        >The Terminal Ledger</span
+      >
+    </a>
+    <nav class="hidden md:flex items-center gap-8 font-mono text-[13px]">
+      {
+        navItems.map((navItem) => (
+          <NavItem text={navItem.text} href={navItem.href} />
+        ))
+      }
+    </nav>
+  </div>
+</header>

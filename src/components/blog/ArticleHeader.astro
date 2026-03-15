@@ -1,0 +1,30 @@
+---
+import MetadataField from "./MetadataField.astro";
+
+interface Props {
+  title: string;
+  metadata: {
+    field: string;
+    value: string;
+  }[];
+}
+
+const { title, metadata } = Astro.props;
+---
+
+<header class="max-w-reading mx-auto mb-16">
+  <h1
+    class="font-display text-[32px] md:text-[48px] font-semibold leading-tight text-text-main mb-8"
+  >
+    {title}
+  </h1>
+  <div
+    class="flex flex-wrap items-center gap-x-6 gap-y-2 pb-4 border-b border-border-color font-mono text-[13px] text-text-muted"
+  >
+    {
+      metadata.map((item) => (
+        <MetadataField field={item.field} value={item.value} />
+      ))
+    }
+  </div>
+</header>

@@ -1,0 +1,146 @@
+---
+const rustCode = `<code class="language-rust"><span class="token keyword">pub enum</span> <span class="token class-name">NodeState</span> {
+    <span class="token class-name">Follower</span>,
+    <span class="token class-name">Candidate</span>,
+    <span class="token class-name">Leader</span>,
+}
+
+<span class="token keyword">pub struct</span> <span class="token class-name">RaftNode</span> {
+    <span class="token comment">// Persistent state on all servers</span>
+    current_term: <span class="token class-name">u64</span>,
+    voted_for: <span class="token class-name">Option</span>&lt;<span class="token class-name">NodeId</span>&gt;,
+    log: <span class="token class-name">Vec</span>&lt;<span class="token class-name">LogEntry</span>&gt;,
+
+    <span class="token comment">// Volatile state on all servers</span>
+    commit_index: <span class="token class-name">u64</span>,
+    last_applied: <span class="token class-name">u64</span>,
+    
+    <span class="token comment">// Current operational state</span>
+    state: <span class="token class-name">NodeState</span>,
+}</code>`;
+---
+
+<article
+  class="max-w-reading mx-auto space-y-8 text-[18px] leading-[1.6] text-text-main"
+>
+  <p>
+    Consensus is the heart of any distributed system. When multiple nodes need
+    to agree on a single source of truth—whether it's a database cluster, a
+    configuration manager, or a distributed lock service—things get complicated
+    quickly. Network partitions, node failures, and message delays conspire to
+    create chaos.
+  </p>
+  <p>
+    For years, Paxos was synonymous with distributed consensus. However, Paxos
+    is famously difficult to understand and even harder to implement correctly.
+    In 2013, Diego Ongaro and John Ousterhout introduced <code
+      class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+      >Raft</code
+    >, an algorithm designed explicitly for understandability.
+  </p>
+  <h2 class="font-display text-[28px] font-semibold text-text-main mt-16 mb-6">
+    The Anatomy of a Node
+  </h2>
+  <p>
+    In Raft, every node in the cluster can be in one of three states: <strong
+      class="text-white font-medium">Follower</strong
+    >, <strong class="text-white font-medium">Candidate</strong>, or <strong
+      class="text-white font-medium">Leader</strong
+    >. All nodes start as Followers. If a Follower hears no communication from a
+    Leader within a randomized timeout period, it transitions to a Candidate and
+    initiates an election.
+  </p>
+  <!-- Full Bleed Code Block -->
+  <div class="relative w-full max-w-code mx-auto -mx-4 sm:mx-auto my-12 group">
+    <div
+      class="flex items-center justify-between bg-surface border border-b-0 border-border-color px-4 py-2 font-mono text-[13px]"
+    >
+      <span class="text-text-muted">src/node.rs</span>
+      <button
+        aria-label="Copy code"
+        class="text-text-muted hover:text-primary transition-colors focus:outline-none flex items-center gap-1 group/btn"
+      >
+        <span
+          class="material-symbols-outlined text-[16px] group-hover/btn:hidden"
+          >content_copy</span
+        >
+        <span class="hidden group-hover/btn:inline text-primary">[copy]</span>
+      </button>
+    </div>
+    <div
+      class="bg-surface border border-border-color overflow-x-auto p-6 scrollbar-thin scrollbar-thumb-border-color scrollbar-track-transparent"
+    >
+      <pre
+        class="font-mono text-[14px] leading-relaxed text-text-main"
+        set:html={rustCode}
+      />
+    </div>
+  </div>
+  <p>
+    The simplicity of this state machine is deceptive. The interactions between
+    these states, driven by RPC calls (<code
+      class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+      >RequestVote</code
+    > and <code
+      class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+      >AppendEntries</code
+    >), are where the actual consensus is forged.
+  </p>
+  <h3 class="font-display text-[24px] font-semibold text-text-main mt-12 mb-4">
+    Log Replication
+  </h3>
+  <p>
+    Once a Leader is elected, it begins accepting client requests. Each request
+    is a command to be executed by the replicated state machines. The Leader
+    appends the command to its log as a new entry, then issues <code
+      class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+      >AppendEntries</code
+    > RPCs in parallel to each of the other servers to replicate the entry.
+  </p>
+  <!-- Image Figure -->
+  <figure class="my-12">
+    <div class="border border-border-color p-1 bg-surface">
+      <img
+        alt="Abstract representation of distributed network nodes"
+        class="w-full h-auto object-cover img-grayscale max-h-[400px]"
+        data-alt="Server rack network cables"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmPtpPdwSQRjE6y6xuln9JzoRnt3TaW8UJlco8WgMPIQ_1sr9RCSPQ0FUgArCE_QznTeJa9UHxW-eIQS_tYEIRNPJctvGFDqjePOoJyyUakRjHlpcyevz-tPifIsWcsjYA4uKq5S_UQ0UFLq_Qa48zK9aLO3_rRYyrlclgZmIZFHbiLcLUHMRDtsFEKw65kJ2JJ0wDk0xQzRKsOyJ5JlrLHG3R22o4KkvKLDiwpLiFhfPWbggV2kmAyNDnYZkeEk8mWZbI2ylnNzs"
+      />
+    </div>
+    <figcaption class="mt-4 font-mono text-[13px] text-text-muted text-center">
+      FIG 1. Physical manifestation of a distributed network partition.
+    </figcaption>
+  </figure>
+  <p>
+    When the entry has been safely replicated (meaning a majority of followers
+    have acknowledged it), the leader applies the entry to its state machine and
+    returns the result of that execution to the client. If followers crash or
+    run slowly, or if network packets are lost, the leader retries <code
+      class="bg-surface text-primary px-1.5 py-0.5 rounded-sm font-mono text-[15px] border border-border-color"
+      >AppendEntries</code
+    > RPCs indefinitely until all followers eventually store all log entries.
+  </p>
+  <!-- Terminal output block -->
+  <div class="relative w-full max-w-code mx-auto -mx-4 sm:mx-auto my-12">
+    <div
+      class="bg-background-dark border border-border-color p-6 font-mono text-[14px] leading-relaxed overflow-x-auto text-text-muted"
+    >
+      <pre><code>$ cargo run --bin raft-cluster
+<span class="text-primary">&gt;</span> [NODE-1] Initializing as Follower (Term: 0)
+<span class="text-primary">&gt;</span> [NODE-2] Initializing as Follower (Term: 0)
+<span class="text-primary">&gt;</span> [NODE-3] Initializing as Follower (Term: 0)
+<span class="text-primary">&gt;</span> [NODE-2] Election timeout reached. Transitioning to Candidate.
+<span class="text-primary">&gt;</span> [NODE-2] Requesting votes for Term 1...
+<span class="text-primary">&gt;</span> [NODE-1] Granted vote to NODE-2 for Term 1
+<span class="text-primary">&gt;</span> [NODE-3] Granted vote to NODE-2 for Term 1
+<span class="text-primary">&gt;</span> <span class="text-text-main font-bold">[NODE-2] Elected Leader for Term 1. Commencing heartbeats.</span></code></pre>
+    </div>
+  </div>
+  <p>
+    Implementing this in Rust provides unique advantages. The ownership model
+    ensures that references to log entries are safe across threads, and the type
+    system allows us to encode state transitions elegantly using enums and
+    pattern matching. In the next section, we'll dive into handling network
+    partitions.
+  </p>
+</article>
