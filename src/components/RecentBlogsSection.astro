@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 
+import BlogListItem from "@/components/BlogListItem.astro";
+
 const posts = await getCollection("blog");
 const recentPosts = posts
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -23,20 +25,12 @@ const recentPosts = posts
   <div class="mb-2" id="home-list">
     {
       recentPosts.map((post) => (
-        <div class="group grid grid-cols-[5.5rem_1fr] min-[521px]:grid-cols-[5rem_1fr_auto] gap-x-4 gap-y-[0.3rem] items-baseline py-[0.65rem] px-0 border-b border-(--border) cursor-pointer transition-[padding-left] duration-200 ease-(--ease) first:border-t first:border-(--border) hover:pl-2">
-          <span class="font-mono text-[0.7rem] text-(--fg-dim) whitespace-nowrap">
-            {post.data.date.toLocaleDateString()}
-          </span>
-          <a
-            href={`/blog/${post.slug}`}
-            class="text-[0.88rem] font-medium text-(--fg) no-underline transition-colors duration-200 ease-(--ease) group-hover:text-white in-[.light]:group-hover:text-black"
-          >
-            {post.data.title}
-          </a>
-          <span class="font-mono text-[0.7rem] text-(--fg-dim) whitespace-nowrap text-right hidden min-[521px]:block">
-            {post.data.readingTime}
-          </span>
-        </div>
+        <BlogListItem
+          date={post.data.date.toLocaleDateString()}
+          slug={post.slug}
+          title={post.data.title}
+          readingTime={post.data.readingTime}
+        />
       ))
     }
   </div>

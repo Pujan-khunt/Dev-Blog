@@ -1,0 +1,29 @@
+---
+interface Props {
+  date: string;
+  slug: string;
+  title: string;
+  readingTime: string;
+}
+
+const { date, slug, title, readingTime } = Astro.props;
+---
+
+<div
+  class="group grid grid-cols-[5.5rem_1fr] min-[521px]:grid-cols-[5rem_1fr_auto] gap-x-4 gap-y-[0.3rem] items-baseline py-[0.65rem] px-0 border-b border-(--border) cursor-pointer transition-[padding-left] duration-200 ease-(--ease) first:border-t first:border-(--border) hover:pl-2"
+>
+  <span class="font-mono text-[0.7rem] text-(--fg-dim) whitespace-nowrap">
+    {date}
+  </span>
+  <a
+    href={`/blog/${slug}`}
+    class="text-[0.88rem] font-medium text-(--fg) no-underline transition-colors duration-200 ease-(--ease) group-hover:text-white in-[.light]:group-hover:text-black"
+  >
+    {title}
+  </a>
+  <span
+    class="font-mono text-[0.7rem] text-(--fg-dim) whitespace-nowrap text-right hidden min-[521px]:block"
+  >
+    {readingTime}
+  </span>
+</div>

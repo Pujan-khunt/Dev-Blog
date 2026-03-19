@@ -23,10 +23,10 @@ const { title, summary, href, type } = Astro.props;
     class="text-[0.85rem] font-semibold text-(--fg) flex justify-between items-center mb-[0.3rem]"
   >
     <div class="flex items-center gap-1">
-      {title}
       {type === "golang" && <GopherIcon className="w-4 h-4" />}
       {type === "astro" && <AstroIcon className="w-4 h-4" />}
       {type === "javascript" && <JavaScriptIcon className="w-4 h-4" />}
+      {title}
     </div>
     <span
       class="text-[0.75rem] text-(--fg-dim) transition-transform duration-200 ease-(--ease) group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

@@ -1,27 +1,26 @@
 ---
+import ProfilePictureWithResume from "@/components/ProfilePictureWithResume.astro";
+
 interface Props {
   photoSrc: string;
   bio: string;
   greeting: string;
+  quote: string;
+  resumeHref: string;
 }
 
-const { photoSrc, bio, greeting } = Astro.props;
+const { resumeHref, photoSrc, bio, greeting, quote } = Astro.props;
 ---
 
 <div
-  class="flex items-start gap-5 mb-14 animate-[fadeUp_0.4s_cubic-bezier(.4,0,.2,1)_both_0.05s]"
+  class="flex items-start gap-5 mb-4 animate-[fadeUp_0.4s_cubic-bezier(.4,0,.2,1)_both_0.05s]"
 >
   <div class="flex-1 pr-4">
     <p class="text-[1.1rem] font-bold mb-2">{greeting}</p>
     <p class="text-[0.88rem] text-(--fg-muted) leading-[1.85]">{bio}</p>
     <p class="text[0.9rem font-bold] mt-4">
-      I believe in hard work over anything else.
+      {quote}
     </p>
   </div>
-  <img
-    class="w-48 h-48 min-w-48 rounded-2xl object-cover border border-(--border) mt-[0.15rem]"
-    src={photoSrc}
-    id="home-avatar"
-    alt="Pujan Khunt"
-  />
+  <ProfilePictureWithResume {resumeHref} {photoSrc} />
 </div>
