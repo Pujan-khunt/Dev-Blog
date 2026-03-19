@@ -1,0 +1,22 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AuthorSection from "@/components/AuthorSection.astro";
+import ContactSection from "@/components/ContactSection.astro";
+import RecentBlogsSection from "@/components/RecentBlogsSection.astro";
+import ProjectsSection from "@/components/ProjectSection.astro";
+---
+
+<BaseLayout>
+  <div class="page active" id="page-home">
+    <div class="wrap">
+      <AuthorSection
+        photoSrc="/profile-pic.jpg"
+        bio="I am Computer Science student in my 2nd year of college. I enjoy learning new things related to tech. Currently I am learning and building projects in Golang."
+        greeting="Hi, I am Pujan Khunt."
+      />
+      <RecentBlogsSection />
+      <ProjectsSection />
+      <ContactSection />
+    </div>
+  </div>
+</BaseLayout>

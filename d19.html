@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Alex Carter</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+</style>
+</head>
+<body>
+
+<script>
+const COPY_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+const CHECK_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+// Build a code block with per-row line numbers
+function cb(lang, rawHTML, filename = '') {
+  const lines = rawHTML.split('\n');
+  const rows = lines.map((l, i) =>
+    `<tr><td class="ln-col">${i + 1}</td><td class="code-col">${l}</td></tr>`
+  ).join('');
+  const fileTag = filename ? `<span class="code-filename">${filename}</span>` : '';
+  return `<div class="code-block">
+    <div class="code-bar"><div class="code-bar-left"><span class="code-lang">${lang}</span>${fileTag}</div><button class="copy-btn" onclick="copyCode(this)"><span>${COPY_ICON}</span></button></div>
+    <div class="code-scroll"><table class="code-table"><tbody>${rows}</tbody></table></div>
+  </div>`;
+}
+
+// Blockquote helper
+function bq(text, cite = '') {
+  return `<blockquote><p>${text}</p>${cite ? `<cite>— ${cite}</cite>` : ''}</blockquote>`;
+}
+
+// Content image helper
+function cimg(src, caption, alt) {
+  return `<div class="content-img-wrap"><img src="${src}" alt="${alt}"/>${caption ? `<p class="content-img-caption">${caption}</p>` : ''}</div>`;
+}
+
+const POSTS = [
+  {
+    id: 0,
+    title: "Why I stopped using useEffect for data fetching",
+    date: "Mar 12, 2026", read: "5 min read",
+    tags: ["react", "patterns", "frontend"],
+    hero: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80",
+    body: () => `
+      <h2>Overview</h2>
+      <p>For a long time, the go-to pattern for fetching data in React was straightforward: drop a <code>useEffect</code>, call your API inside it, and set state. It works. Until it doesn't.</p>
+      ${bq("The fundamental mistake is treating server state the same as client state. They have completely different lifecycles.", "Dan Abramov")}
+      <p>After shipping enough features with this pattern, the cracks started showing — race conditions, loading state mismatches, and a growing pile of cleanup functions nobody wanted to think about.</p>
+      <h2>The Classic Pattern</h2>
+      <p>Here's the pattern most of us wrote without thinking:</p>
+      ${cb('tsx', `<span class="t-kw">const</span> [<span class="t-var">data</span>, <span class="t-fn">setData</span>] = <span class="t-fn">useState</span>(<span class="t-kw">null</span>);
+<span class="t-kw">const</span> [<span class="t-var">loading</span>, <span class="t-fn">setLoading</span>] = <span class="t-fn">useState</span>(<span class="t-kw">true</span>);
+
+<span class="t-fn">useEffect</span>(() => {
+  <span class="t-fn">fetchUser</span>(<span class="t-var">userId</span>).<span class="t-fn">then</span>((<span class="t-var">res</span>) => {
+    <span class="t-fn">setData</span>(<span class="t-var">res</span>);
+    <span class="t-fn">setLoading</span>(<span class="t-kw">false</span>);
+  });
+}, [<span class="t-var">userId</span>]);`)}
+      <p>Looks fine. But what happens when <code>userId</code> changes before the first request completes? You get a race condition — the second response may arrive before the first, rendering stale data.</p>
+      <h2>Why It Breaks Down</h2>
+      <ul>
+        <li><code>useEffect</code> has no built-in cancellation — you have to wire that up with <code>AbortController</code>.</li>
+        <li>Loading, error, and data states are managed manually and drift out of sync.</li>
+        <li>No caching — every mount refetches, even if you just had that data.</li>
+        <li>No deduplication — two components asking for the same resource fire two requests.</li>
+      </ul>
+      <h2>The Better Way</h2>
+      <p>Libraries like <code>TanStack Query</code> and <code>SWR</code> treat server state as a first-class concern, separate from UI state.</p>
+      ${cb('tsx', `<span class="t-kw">const</span> { <span class="t-var">data</span>, <span class="t-var">isLoading</span>, <span class="t-var">error</span> } = <span class="t-fn">useQuery</span>({
+  queryKey: [<span class="t-str">'user'</span>, <span class="t-var">userId</span>],
+  queryFn: () => <span class="t-fn">fetchUser</span>(<span class="t-var">userId</span>),
+});`)}
+      ${cimg('https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80', 'TanStack Query\u2019s devtools showing cached queries and their states.', 'TanStack Query devtools screenshot')}
+      <h2>Final Thoughts</h2>
+      <p>The shift isn't about adding a dependency. It's about acknowledging that server state and client state are different problems that deserve different solutions.</p>`
+  },
+  {
+    id: 1, title: "The case for boring TypeScript", date: "Feb 28, 2026", read: "4 min read",
+    tags: ["typescript", "dx"],
+    hero: null,
+    body: () => `
+      <h2>Overview</h2>
+      <p>TypeScript is a powerful tool, but its power is often used against you. Advanced types are fun to write. They're rarely fun to read, debug, or maintain six months later.</p>
+      ${bq("Complexity is the enemy of reliability.", "Werner Vogels")}
+      <h2>What Boring Looks Like</h2>
+      <p>Boring TypeScript means preferring <code>type User = { id: string; name: string }</code> over a four-level deep conditional mapped type that achieves the same thing.</p>
+      ${cb('ts', `<span class="t-cm">// ✗ clever</span>
+<span class="t-kw">type</span> <span class="t-var">DeepReadonly</span>&lt;<span class="t-var">T</span>&gt; = { <span class="t-kw">readonly</span> [<span class="t-var">K</span> <span class="t-kw">in keyof</span> <span class="t-var">T</span>]: <span class="t-var">T</span>[<span class="t-var">K</span>] <span class="t-kw">extends</span> <span class="t-kw">object</span> ? <span class="t-var">DeepReadonly</span>&lt;<span class="t-var">T</span>[<span class="t-var">K</span>]&gt; : <span class="t-var">T</span>[<span class="t-var">K</span>] };
+
+<span class="t-cm">// ✓ boring, works fine for 99% of cases</span>
+<span class="t-kw">type</span> <span class="t-var">User</span> = { <span class="t-kw">readonly</span> <span class="t-var">id</span>: <span class="t-kw">string</span>; <span class="t-kw">readonly</span> <span class="t-var">name</span>: <span class="t-kw">string</span> };`)}
+      <h2>Final Thoughts</h2>
+      <p>The best type is the one your teammate understands at 9am on a Monday without coffee. Write for that person.</p>`
+  },
+  {
+    id: 2, title: "What I learned shipping a design system alone", date: "Feb 10, 2026", read: "7 min read",
+    tags: ["css", "design-systems", "frontend"],
+    hero: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?w=900&q=80",
+    body: () => `
+      <h2>Overview</h2>
+      <p>Building a design system solo is a lesson in prioritisation. You can't do everything, so you have to be ruthless about what actually gets used.</p>
+      ${bq("A design system is not a project. It's a product serving products.", "Nathan Curtis")}
+      <h2>Start with tokens</h2>
+      <p>Before components, nail your design tokens — spacing, colour, radius, shadow. Everything else is derived from them.</p>
+      ${cb('css', `<span class="t-tag">:root</span> {
+  <span class="t-var">--space-1</span>: <span class="t-num">4px</span>;
+  <span class="t-var">--space-2</span>: <span class="t-num">8px</span>;
+  <span class="t-var">--space-4</span>: <span class="t-num">16px</span>;
+  <span class="t-var">--radius-sm</span>: <span class="t-num">3px</span>;
+  <span class="t-var">--radius-md</span>: <span class="t-num">6px</span>;
+  <span class="t-var">--color-bg</span>: <span class="t-str">#111</span>;
+  <span class="t-var">--color-fg</span>: <span class="t-str">#e2e2e2</span>;
+}`)}
+      ${cimg('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80', 'Token documentation page from the internal Storybook instance.', 'Storybook design tokens')}
+      <h2>Final Thoughts</h2>
+      <p>A design system is never finished. Ship the boring parts first: buttons, inputs, typography. The fancy stuff can wait.</p>`
+  },
+  {
+    id: 3, title: "Rethinking optimistic UI: when it helps and when it lies", date: "Jan 22, 2026", read: "6 min read",
+    tags: ["react", "ux", "patterns"],
+    hero: null,
+    body: () => `
+      <h2>Overview</h2>
+      <p>Optimistic UI feels magical when it works. The interface snaps to the expected state instantly, no spinner in sight.</p>
+      ${bq("Never lie to your users about the outcome of an action that cannot be undone.")}
+      <h2>When It Helps</h2>
+      <p>Low-stakes, high-frequency actions are ideal — liking a post, reordering a list, toggling a preference. The failure case is rare and recoverable.</p>
+      <h2>When It Lies</h2>
+      <p>High-stakes actions — payments, account deletion, permission changes — should never be optimistic. The user needs to know the server agreed before you tell them it worked.</p>`
+  },
+  {
+    id: 4, title: "A deep dive into CSS cascade layers", date: "Jan 8, 2026", read: "8 min read",
+    tags: ["css", "frontend"],
+    hero: null,
+    body: () => `
+      <h2>Overview</h2>
+      <p>Cascade layers give you explicit control over specificity resolution. Before <code>@layer</code>, managing third-party styles alongside your own was a specificity arms race.</p>
+      ${cb('css', `<span class="t-tag">@layer</span> reset, base, components, utilities;
+
+<span class="t-tag">@layer</span> base {
+  <span class="t-tag">a</span> { <span class="t-var">color</span>: inherit; }
+}
+
+<span class="t-tag">@layer</span> utilities {
+  <span class="t-tag">.text-muted</span> { <span class="t-var">color</span>: <span class="t-str">#888</span>; }
+}`)}
+      <p>Styles in later layers always win over earlier ones, regardless of specificity. This one rule eliminates entire categories of CSS debugging.</p>
+      ${bq("Cascade layers are the most important CSS feature in a decade. They fundamentally change how you structure stylesheets.", "Miriam Suzanne")}`
+  },
+  {
+    id: 5, title: "My terminal setup in 2026", date: "Dec 19, 2025", read: "3 min read",
+    tags: ["tooling", "terminal", "dx"],
+    hero: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=900&q=80",
+    body: () => `
+      <h2>Overview</h2>
+      <p>My terminal is where I spend most of my working hours. Getting it right is worth the investment.</p>
+      <h2>The Stack</h2>
+      <ul>
+        <li>WezTerm — GPU-accelerated, configured in Lua.</li>
+        <li>fish shell — autosuggestions out of the box.</li>
+        <li>Starship prompt — fast, minimal, written in Rust.</li>
+        <li>zoxide instead of <code>cd</code> — I haven't typed a full path in years.</li>
+      </ul>
+      ${cb('bash', `<span class="t-cm"># install the essentials on Arch</span>
+<span class="t-tag">sudo</span> pacman -S fish starship zoxide fzf
+<span class="t-tag">chsh</span> -s <span class="t-str">/usr/bin/fish</span>
+
+<span class="t-cm"># add to config.fish</span>
+<span class="t-fn">zoxide</span> init fish | source
+<span class="t-fn">starship</span> init fish | source`)}
+      ${cimg('https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=800&q=80', 'My WezTerm setup with Starship prompt and a custom colour scheme.', 'Terminal screenshot')}
+      ${bq("The terminal is the last place where you're still in full control of your environment.")}`
+  },
+  {
+    id: 6, title: "Monorepos: the good, bad, and the build times", date: "Dec 3, 2025", read: "6 min read",
+    tags: ["tooling", "architecture", "devops"],
+    hero: null,
+    body: () => `
+      <h2>Overview</h2>
+      <p>Monorepos solve real problems: shared code, atomic cross-package commits, unified tooling. They also introduce real problems: build times, cache invalidation, and root config ownership.</p>
+      ${bq("Don't adopt a monorepo because Google uses one. Adopt it because your packages change together.")}
+      <h2>Final Thoughts</h2>
+      <p>Use a monorepo when you have multiple packages that change together. Don't use one just because a big company does.</p>`
+  },
+  {
+    id: 7, title: "On writing code that reads like prose", date: "Nov 17, 2025", read: "4 min read",
+    tags: ["patterns", "craft"],
+    hero: null,
+    body: () => `
+      <h2>Overview</h2>
+      <p>The best code I've read doesn't need comments because the code itself explains what's happening and why.</p>
+      ${cb('ts', `<span class="t-cm">// ✗ cryptic</span>
+<span class="t-kw">const</span> <span class="t-var">x</span> = <span class="t-var">u</span>.<span class="t-var">a</span>.<span class="t-fn">filter</span>(<span class="t-var">i</span> => <span class="t-var">i</span>.<span class="t-var">s</span> === <span class="t-num">1</span>);
+
+<span class="t-cm">// ✓ reads like prose</span>
+<span class="t-kw">const</span> <span class="t-var">activeSubscriptions</span> = <span class="t-var">user</span>.<span class="t-var">accounts</span>
+  .<span class="t-fn">filter</span>((<span class="t-var">account</span>) => <span class="t-var">account</span>.<span class="t-var">status</span> === <span class="t-str">'active'</span>);`)}
+      ${bq("Programs must be written for people to read, and only incidentally for machines to execute.", "Harold Abelson")}
+      <h2>Final Thoughts</h2>
+      <p>Write code for the next person, not the compiler. The compiler doesn't get confused — your teammates do.</p>`
+  },
+];
+
+function tagsHTML(tags) {
+  return tags.map(t => `<span class="tag">${t}</span>`).join('');
+}
+
+// strip year from a date string like "Mar 12, 2026" → "Mar 12"
+function shortDate(d) { return d.replace(/,\s*\d{4}$/, ''); }
+
+function makeRow(p) {
+  const row = document.createElement('div');
+  row.className = 'writing-row';
+  row.innerHTML = `
+    <span class="writing-date">${shortDate(p.date)}</span>
+    <span class="writing-title">${p.title}</span>
+    <span class="writing-time">${p.read}</span>`;
+  row.onclick = () => openArticle(p.id);
+  return row;
+}
+
+function openArticle(id) {
+  const p = POSTS[id];
+  const heroEl = document.getElementById('art-hero');
+  heroEl.innerHTML = p.hero
+    ? `<img class="article-hero" src="${p.hero}" alt="${p.title}"/>`
+    : `<div class="article-hero-placeholder">no cover image</div>`;
+  document.getElementById('art-title').textContent = p.title;
+  document.getElementById('art-meta').innerHTML = `${p.date} <span>·</span> ${p.read}`;
+  document.getElementById('art-tags').innerHTML = tagsHTML(p.tags);
+  document.getElementById('art-body').innerHTML = p.body();
+  show('article');
+}
+
+function renderHome() {
+  const el = document.getElementById('home-list');
+  el.innerHTML = '';
+  POSTS.slice(0, 4).forEach(p => el.appendChild(makeRow(p)));
+}
+
+function renderBlog() {
+  const el = document.getElementById('blog-list');
+  el.innerHTML = '';
+  // group by year
+  const byYear = {};
+  POSTS.forEach(p => {
+    const yr = p.date.split(', ')[1] || p.date.slice(-4);
+    if (!byYear[yr]) byYear[yr] = [];
+    byYear[yr].push(p);
+  });
+  Object.keys(byYear).sort((a,b) => b - a).forEach(yr => {
+    const group = document.createElement('div');
+    group.className = 'year-group';
+    const label = document.createElement('p');
+    label.className = 'year-label';
+    label.textContent = yr;
+    group.appendChild(label);
+    const list = document.createElement('div');
+    list.className = 'writings-list';
+    byYear[yr].forEach(p => list.appendChild(makeRow(p, false)));
+    group.appendChild(list);
+    el.appendChild(group);
+  });
+}
+
+function show(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function copyCode(btn) {
+  const rows = btn.closest('.code-block').querySelectorAll('.code-col');
+  const text = Array.from(rows).map(r => r.innerText).join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    const span = btn.querySelector('span');
+    span.innerHTML = CHECK_ICON;
+    btn.classList.add('copied');
+    setTimeout(() => { span.innerHTML = COPY_ICON; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+let isLight = false;
+function toggleTheme() {
+  isLight = !isLight;
+  document.body.classList.toggle('light', isLight);
+  const label = isLight ? 'dark' : 'light';
+  ['theme-label','theme-label2','theme-label3'].forEach(id => document.getElementById(id).textContent = label);
+}
+
+renderHome(); renderBlog();
+
+// Load uploaded avatar
+(async () => {
+  try {
+    const data = await window.fs.readFile('IMG_20230820_133357.jpg');
+    const blob = new Blob([data], { type: 'image/jpeg' });
+    document.getElementById('home-avatar').src = URL.createObjectURL(blob);
+  } catch(e) { /* keep placeholder */ }
+})();
+</script>
+</body>
+</html>

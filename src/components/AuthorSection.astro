@@ -1,0 +1,17 @@
+---
+interface Props {
+  photoSrc: string;
+  bio: string;
+  greeting: string;
+}
+
+const { photoSrc, bio, greeting } = Astro.props;
+---
+
+<div class="home-intro">
+  <div class="home-text">
+    <p class="home-greeting">{greeting}</p>
+    <p class="home-bio">{bio}</p>
+  </div>
+  <img class="home-avatar" src={photoSrc} id="home-avatar" alt="Pujan Khunt" />
+</div>

@@ -1,0 +1,33 @@
+---
+import GopherIcon from "@/svg/Gopher.astro";
+import AstroIcon from "@/svg/Astro.astro";
+import JavaScriptIcon from "@/svg/JavaScript.astro";
+
+interface Props {
+  title: string;
+  summary: string;
+  href: string;
+  type: "golang" | "astro" | "javascript";
+}
+
+const { title, summary, href, type } = Astro.props;
+---
+
+<a
+  class="project-card relative"
+  target="_blank"
+  rel="noopener noreferrer"
+  {href}
+>
+  <div class="project-card-title">
+    <div class="flex items-center gap-1">
+      {title}
+      {type === "golang" && <GopherIcon className="w-4 h-4" />}
+      {type === "astro" && <AstroIcon className="w-4 h-4" />}
+      {type === "javascript" && <JavaScriptIcon className="w-4 h-4" />}
+    </div>
+    <span class="arrow-icon">↗</span>
+  </div><div class="project-card-desc">
+    {summary}
+  </div>
+</a>

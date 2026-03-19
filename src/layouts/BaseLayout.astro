@@ -1,0 +1,56 @@
+---
+import "@/styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Pujan's Developer Blog",
+  description = "My thoughts and guides for stuff I forget.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+
+    <footer>
+      <span class="footer-copy">© 2026 pujankhunt</span>
+      <div class="footer-right">
+        <span>
+          theme: <button class="theme-btn" id="theme-toggle">light</button>
+        </span>
+        <span>v1.0</span>
+      </div>
+    </footer>
+
+    <script>
+      const themeBtn = document.getElementById("theme-toggle");
+      let isLight = false;
+
+      if (themeBtn) {
+        themeBtn.addEventListener("click", () => {
+          isLight = !isLight;
+          document.body.classList.toggle("light", isLight);
+          themeBtn.textContent = isLight ? "dark" : "light";
+        });
+      }
+    </script>
+  </body>
+</html>

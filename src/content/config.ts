@@ -12,7 +12,7 @@ const blogSchema = z.object({
     .optional(),
   isDraft: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
-  readingTime: z.string()
+  readingTime: z.string(),
 });
 
 const blogCollectionConfig: CollectionConfig<typeof blogSchema> = {

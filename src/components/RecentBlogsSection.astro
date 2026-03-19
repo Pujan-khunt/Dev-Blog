@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const recentPosts = posts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+---
+
+<div class="section-block" style="animation-delay:.15s">
+  <div class="section-head">
+    <a class="section-head-link" href="/blogs"> writings ↗ </a>
+  </div>
+  <p class="section-sub">my thoughts and guides for stuff I forget.</p>
+  <div class="writings-list" id="home-list">
+    {
+      recentPosts.map((post) => (
+        <div class="writing-row">
+          <span class="writing-date">
+            {post.data.date.toLocaleDateString()}
+          </span>
+          <a href={`/blog/${post.slug}`} class="writing-title">
+            {post.data.title}
+          </a>
+          <span class="writing-time">{post.data.readingTime}</span>
+        </div>
+      ))
+    }
+  </div>
+  <a class="all-link" href="/blogs"> All writings ↗ </a>
+</div>
