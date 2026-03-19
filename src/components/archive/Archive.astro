@@ -1,0 +1,40 @@
+---
+import Header from "./Header.astro";
+import Article from "./Article.astro";
+
+const articles = [
+  {
+    date: "2023-11-12",
+    title: "Scaling the Data Tier: A Pragmatic Approach",
+  },
+  {
+    date: "2023-10-27",
+    title: "Event-Driven Architecture in Practice",
+  },
+  {
+    date: "2023-09-05",
+    title: "Distributed Caching Strategies for High Traffic",
+  },
+  {
+    date: "2023-08-14",
+    title: "Microservices vs Monoliths: A Cost Analysis",
+  },
+  {
+    date: "2023-07-02",
+    title: "Designing Idempotent APIs at Scale",
+  },
+];
+---
+
+<main class="flex-1 overflow-y-auto flex justify-center p-8 md:p-12">
+  <div class="max-w-[720px] w-full flex flex-col gap-8">
+    <div class="flex flex-col">
+      <Header tag="system-design" />
+      {
+        articles.map((article) => (
+          <Article date={article.date} title={article.title} />
+        ))
+      }
+    </div>
+  </div>
+</main>

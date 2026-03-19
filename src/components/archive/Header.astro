@@ -1,0 +1,13 @@
+---
+interface Props {
+  tag: string;
+}
+
+const { tag } = Astro.props;
+---
+
+<header class="border-b border-[#232730] pb-6 mb-4">
+  <h2 class="font-mono text-base text-[#F05D5E]">
+    &gt; filtering by: [{tag}]
+  </h2>
+</header>
