@@ -1,0 +1,17 @@
+---
+interface Props {
+  tag: string;
+  href: string;
+}
+
+const { tag, href } = Astro.props;
+---
+
+<a
+  class="nav-tag group font-mono text-sm px-3 py-1 cursor-pointer transition-none"
+  {href}
+>
+  <span class="bracket text-muted transition-none">[</span><span
+    class="text text-muted transition-none">{tag}</span
+  ><span class="bracket text-muted transition-none">]</span>
+</a>

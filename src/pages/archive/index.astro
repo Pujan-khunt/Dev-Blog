@@ -1,12 +1,18 @@
 ---
-import "../../styles/archive-theme.css";
-import Sidebar from "../../components/archive/Sidebar.astro";
-import Archive from "../../components/archive/Archive.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LeftSidebar from "@/components/home/LeftSidebar.astro";
+import Archive from "@/components/archive/Archive.astro";
+import AuthorHeader from "@/components/author/AuthorHeader.astro";
 ---
 
-<body class="bg-[#0B0C0E] text-[#EBECEF] font-body min-h-screen">
-  <div class="flex h-screen overflow-hidden">
-    <Sidebar />
-    <Archive />
-  </div>
-</body>
+<BaseLayout title="archive page" description="description for archive page">
+  <body class="bg-[#0B0C0E] text-[#EBECEF] font-body min-h-screen">
+    <div class="h-screen overflow-hidden">
+      <AuthorHeader />
+      <div class="flex">
+        <LeftSidebar />
+        <Archive />
+      </div>
+    </div>
+  </body>
+</BaseLayout>

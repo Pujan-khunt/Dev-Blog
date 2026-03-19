@@ -1,40 +1,35 @@
+---
+import MainNavItem from "@/components/home/MainNavItem.astro";
+
+const navItems = [
+  {
+    material_icon: "home",
+    text: "Home",
+    href: "/",
+  },
+  {
+    material_icon: "folder_open",
+    text: "Archive",
+    href: "/archive",
+  },
+  {
+    material_icon: "person",
+    text: "Author",
+    href: "/author",
+  },
+];
+---
+
 <nav
   class="flex md:flex-col gap-2 mb-0 md:mb-12 shrink-0 border-r md:border-r-0 border-border-color pr-6 md:pr-0"
 >
-  <a
-    class="flex items-center gap-3 px-3 py-2 bg-surface border border-border-color text-text-main group transition-none"
-    href="#"
-  >
-    <span aria-hidden="true" class="material-symbols-outlined text-lg"
-      >home</span
-    >
-    <span
-      class="font-mono text-sm tracking-wide group-hover:text-primary transition-none"
-      >Home</span
-    >
-  </a>
-  <a
-    class="flex items-center gap-3 px-3 py-2 text-muted hover:bg-surface hover:text-text-main group transition-none"
-    href="#"
-  >
-    <span aria-hidden="true" class="material-symbols-outlined text-lg"
-      >folder_open</span
-    >
-    <span
-      class="font-mono text-sm tracking-wide group-hover:text-primary transition-none"
-      >Archive</span
-    >
-  </a>
-  <a
-    class="flex items-center gap-3 px-3 py-2 text-muted hover:bg-surface hover:text-text-main group transition-none"
-    href="#"
-  >
-    <span aria-hidden="true" class="material-symbols-outlined text-lg"
-      >person</span
-    >
-    <span
-      class="font-mono text-sm tracking-wide group-hover:text-primary transition-none"
-      >Author Ledger</span
-    >
-  </a>
+  {
+    navItems.map((navItem) => (
+      <MainNavItem
+        material_icon={navItem.material_icon}
+        text={navItem.text}
+        href={navItem.href}
+      />
+    ))
+  }
 </nav>

@@ -8,5 +8,8 @@ const { href, text } = Astro.props;
 ---
 
 <li>
-  <a class="text-text-main link-underline" {href}>{text}</a>
+  <a
+    class="text-text-main relative inline-block no-underline after:absolute after:w-0 after:h-px after:-bottom-[2px] after:left-0 after:bg-primary after:transition-[width] after:duration-300 after:ease-out hover:after:w-full"
+    {href}>{text}</a
+  >
 </li>
