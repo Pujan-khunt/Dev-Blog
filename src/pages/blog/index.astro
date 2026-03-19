@@ -1,4 +1,5 @@
 ---
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/blog/Navbar.astro";
 import ArticleHeader from "../../components/blog/ArticleHeader.astro";
 import ArticleContent from "../../components/blog/ArticleContent.astro";
@@ -14,6 +15,7 @@ const metadata = [
 ];
 ---
 
+<BaseLayout title="Blog Page" description="description for blog page">
 <body
   class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col"
 >
@@ -27,3 +29,4 @@ const metadata = [
     <ArticleFooter />
   </main>
 </body>
+</BaseLayout>

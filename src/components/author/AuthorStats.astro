@@ -1,0 +1,22 @@
+---
+import AuthorStatItem from "./AuthorStatItem.astro";
+---
+
+<div class="flex flex-col pt-12 lg:pt-0">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border-color border border-border-color"
+  >
+    <AuthorStatItem label="sys.commits_total" value="14.2k" />
+    <AuthorStatItem label="ledger.entries" value="128" />
+    <AuthorStatItem label="sys.uptime_years" value="11" />
+    <AuthorStatItem label="infra.deployments" value="4,892" />
+  </div>
+  <div class="mt-8 flex justify-end">
+    <span
+      class="font-mono text-muted text-xs opacity-50 flex items-center gap-2"
+    >
+      <span class="material-symbols-outlined text-[14px]">sync</span>
+      Data last synced: 2023-10-27T14:32:00Z
+    </span>
+  </div>
+</div>
