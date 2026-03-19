@@ -2,12 +2,18 @@
 import ProjectCard from "@/components/ProjectCard.astro";
 ---
 
-<div class="section-block" style="margin-top:3rem;animation-delay:.2s">
-  <div class="section-head">
-    <span class="section-head-link">projects ↗</span>
+<div class="mt-12 animate-[fadeUp_0.4s_cubic-bezier(.4,0,.2,1)_both_0.2s]">
+  <div class="mb-[0.3rem]">
+    <span
+      class="text-[0.92rem] font-bold text-(--fg) cursor-pointer no-underline inline-flex items-center gap-[0.2rem] transition-opacity duration-200 hover:opacity-70"
+      >projects ↗</span
+    >
   </div>
-  <p class="section-sub">stuff I built in my free time.</p>
-  <div class="projects-grid">
+  <p class="text-[0.8rem] text-(--fg-muted) mb-[1.2rem]">
+    stuff I built in my free time.
+  </p>
+
+  <div class="grid grid-cols-1 min-[521px]:grid-cols-2 gap-[0.6rem] mb-2">
     <ProjectCard
       title="Redis Lite"
       summary="Custom Implementation of Redis in Go. Performance: p50 => ~0.13ms"

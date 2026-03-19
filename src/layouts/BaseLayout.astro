@@ -1,6 +1,8 @@
 ---
 import "@/styles/global.css";
 
+import FooterSection from "@/components/FooterSection.astro";
+
 interface Props {
   title?: string;
   description?: string;
@@ -13,7 +15,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="text-[15px]">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,19 +29,11 @@ const {
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body
+    class="bg-(--bg) pt-20 max-w-2xl mx-auto text-(--fg) font-(--sans) leading-[1.7] antialiased min-h-screen"
+  >
     <slot />
-
-    <footer>
-      <span class="footer-copy">© 2026 pujankhunt</span>
-      <div class="footer-right">
-        <span>
-          theme: <button class="theme-btn" id="theme-toggle">light</button>
-        </span>
-        <span>v1.0</span>
-      </div>
-    </footer>
-
+    <FooterSection />
     <script>
       const themeBtn = document.getElementById("theme-toggle");
       let isLight = false;
