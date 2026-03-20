@@ -1,12 +1,15 @@
 ---
+import { Image } from "astro:assets";
+
 import Download from "@/svg/Download.astro";
+import type { ImageMetadata } from "astro";
 
 interface Props {
-  photoSrc: string;
+  profileImage: ImageMetadata;
   resumeHref: string;
 }
 
-const { photoSrc, resumeHref } = Astro.props;
+const { profileImage, resumeHref } = Astro.props;
 ---
 
 <a
@@ -14,11 +17,14 @@ const { photoSrc, resumeHref } = Astro.props;
   target="_blank"
   href={resumeHref}
 >
-  <img
+  <Image
+    priority={true}
+    src={profileImage}
+    width={176}
+    height={176}
     class="w-44 h-44 min-w-44 rounded-t-2xl object-cover"
-    src={photoSrc}
-    id="home-avatar"
     alt="Pujan Khunt"
+    id="home-avatar"
   />
   <div
     class="group flex items-center justify-center rounded-b-2xl gap-[0.4rem] font-mono text-[0.72rem] tracking-[0.04em] no-underline py-2 px-[0.65rem] rounded-xs transition-all duration-200 ease-(--ease) w-full"

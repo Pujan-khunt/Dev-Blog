@@ -1,15 +1,16 @@
 ---
 import ProfilePictureWithResume from "@/components/ProfilePictureWithResume.astro";
+import type { ImageMetadata } from "astro";
 
 interface Props {
-  photoSrc: string;
   bio: string;
   greeting: string;
   quote: string;
   resumeHref: string;
+  profileImage: ImageMetadata;
 }
 
-const { resumeHref, photoSrc, bio, greeting, quote } = Astro.props;
+const { resumeHref, bio, greeting, quote, profileImage } = Astro.props;
 ---
 
 <div
@@ -22,5 +23,5 @@ const { resumeHref, photoSrc, bio, greeting, quote } = Astro.props;
       {quote}
     </p>
   </div>
-  <ProfilePictureWithResume {resumeHref} {photoSrc} />
+  <ProfilePictureWithResume {profileImage} {resumeHref} />
 </div>
