@@ -1,33 +1,28 @@
 ---
-
+import ContactItem from "@/components/ContactItem.astro";
+import { contacts } from "@/data/contacts";
 ---
 
-<div class="mt-12">
-  <p class="text-[0.92rem] font-bold mb-[0.4rem]">contact</p>
-  <p class="text-[0.82rem] text-fg-muted leading-[1.9]">
-    connect with me on
-    <a
-      href="https://github.com/Pujan-khunt"
-      class="text-fg font-medium no-underline border-b border-border transition-all duration-200 hover:border-fg-muted hover:text-white"
-      >GitHub</a
-    >
-    <span class="mx-[0.3rem] text-fg-dim">·</span>
-    <a
-      href="https://x.com/pujankhunt2412"
-      class="text-fg font-medium no-underline border-b border-border transition-all duration-200 hover:border-fg-muted hover:text-white"
-      >X.com</a
-    >
-    <span class="mx-[0.3rem] text-fg-dim">·</span>
-    <a
-      href="https://www.linkedin.com/in/pujan-khunt-40246425b/"
-      class="text-fg font-medium no-underline border-b border-border transition-all duration-200 hover:border-fg-muted hover:text-white"
-      >LinkedIn</a
-    >
-    &nbsp;or reach out to me at
-    <a
-      href="mailto:pujankhunt2412@gmail.com"
-      class="text-fg font-medium no-underline border-b border-border transition-all duration-200 hover:border-fg-muted hover:text-white"
-      >pujankhunt2412@gmail.com</a
-    >
-  </p>
-</div>
+<!-- Section Heading -->
+<p class="text-[0.92rem] font-bold mb-[0.4rem] mt-12">contact</p>
+
+<!-- Section Data -->
+<p class="text-[0.82rem] text-fg-muted leading-[1.9]">
+  connect with me on
+
+  {
+    contacts.map((contact, index) => (
+      <>
+        <ContactItem {contact} />
+
+        {index < contacts.length - 2 && (
+          <span class="mx-[0.3rem] text-fg-dim">·</span>
+        )}
+
+        {index === contacts.length - 2 && (
+          <>&nbsp;or reach out to me at&nbsp;</>
+        )}
+      </>
+    ))
+  }
+</p>

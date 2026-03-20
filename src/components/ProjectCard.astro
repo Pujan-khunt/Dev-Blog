@@ -2,34 +2,36 @@
 import GopherIcon from "@/svg/Gopher.astro";
 import AstroIcon from "@/svg/Astro.astro";
 import JavaScriptIcon from "@/svg/JavaScript.astro";
-import type { Project } from "@/types/common";
+import type { Project } from "@/types";
 
-interface Props extends Project {}
+interface Props {
+  project: Project;
+}
 
-const { title, summary, href, type } = Astro.props;
+const { project } = Astro.props;
 ---
 
 <a
-  class="group relative block border border-border p-[0.9rem_1rem] cursor-pointer transition-all duration-200 ease-(--ease) hover:border-[#666] hover:-translate-y-0.5 hover:bg-[#181818] in-[.light]:hover:bg-[#f2f2f2] no-underline"
+  class="border border-border p-4 cursor-pointer transition-all duration-250 hover:-translate-y-1 hover:dark:border-dark-border-hover hover:border-dark-border no-underline"
   target="_blank"
   rel="noopener noreferrer"
-  {href}
+  href={project.href}
 >
+  <!-- Card Title -->
   <div
-    class="text-[0.85rem] font-semibold text-fg flex justify-between items-center mb-[0.3rem]"
+    class="text-[0.85rem] font-medium text-fg flex justify-between items-center mb-[0.3rem]"
   >
     <div class="flex items-center gap-1">
-      {type === "golang" && <GopherIcon className="w-4 h-4" />}
-      {type === "astro" && <AstroIcon className="w-4 h-4" />}
-      {type === "javascript" && <JavaScriptIcon className="w-4 h-4" />}
-      {title}
+      {project.type === "golang" && <GopherIcon className="w-4 h-4" />}
+      {project.type === "astro" && <AstroIcon className="w-4 h-4" />}
+      {project.type === "javascript" && <JavaScriptIcon className="w-4 h-4" />}
+      {project.title}
     </div>
-    <span
-      class="text-[0.75rem] text-fg-dim transition-transform duration-200 ease-ease group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-      >↗</span
-    >
+    <span class="text-[0.75rem] text-fg-dim">↗</span>
   </div>
+
+  <!-- Card Summary -->
   <div class="text-[0.78rem] text-fg-muted leading-[1.6]">
-    {summary}
+    {project.summary}
   </div>
 </a>

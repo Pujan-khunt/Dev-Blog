@@ -1,0 +1,17 @@
+---
+import type { Contact } from "@/types.ts";
+
+interface Props {
+  contact: Contact;
+}
+
+const { contact } = Astro.props;
+---
+
+<a
+  href={contact.href}
+  target="_blank"
+  class="text-fg font-medium no-underline border-b border-border transition-colors duration-200 hover:border-fg-muted"
+>
+  {contact.label}
+</a>

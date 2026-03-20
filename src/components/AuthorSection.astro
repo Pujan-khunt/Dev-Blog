@@ -1,25 +1,45 @@
 ---
-import ProfilePictureWithResume from "@/components/ProfilePictureWithResume.astro";
-import type { ImageMetadata } from "astro";
-
-interface Props {
-  bio: string;
-  greeting: string;
-  quote: string;
-  resumeHref: string;
-  profileImage: ImageMetadata;
-}
-
-const { resumeHref, bio, greeting, quote, profileImage } = Astro.props;
+import { author } from "@/data/author";
+import { Image } from "astro:assets";
+import Download from "@/svg/Download.astro";
 ---
 
 <div class="flex items-start gap-5 mb-4">
+  <!-- Author Information -->
   <div class="flex-1 pr-4">
-    <p class="text-[1.1rem] font-bold mb-2">{greeting}</p>
-    <p class="text-[0.88rem] text-fg-muted leading-[1.85]">{bio}</p>
-    <p class="text[0.9rem font-bold] mt-4">
-      {quote}
-    </p>
+    <!-- Greeting -->
+    <p class="text-[1.1rem] font-bold mb-2">{author.greeting}</p>
+
+    <!-- Bio -->
+    <p class="text-[0.88rem] text-fg-muted leading-[1.85]">{author.bio}</p>
+
+    <!-- Quote -->
+    <p class="text[0.9rem] mt-4">{author.quote}</p>
   </div>
-  <ProfilePictureWithResume {profileImage} {resumeHref} />
+
+  <!-- Author Profile Picture + Resume -->
+  <a
+    class="text-fg border border-border hover:border-dark-border rounded-2xl hover:-translate-y-1 transition-all duration-200 cursor-pointer"
+    target="_blank"
+    href={author.resumeHref}
+  >
+    <!-- Profile Picture -->
+    <Image
+      priority={true}
+      src={author.profileImage}
+      width={176}
+      height={176}
+      class="w-44 h-44 min-w-44 rounded-t-2xl object-cover"
+      alt="Pujan Khunt"
+      id="home-avatar"
+    />
+
+    <!-- Resume Button -->
+    <div
+      class="flex items-center justify-center rounded-b-2xl gap-[0.4rem] font-mono text-[0.72rem] tracking-[0.04em] no-underline py-2 px-[0.65rem] rounded-xs transition-all duration-200 ease-ease w-full"
+    >
+      <Download />
+      resume.pdf
+    </div>
+  </a>
 </div>

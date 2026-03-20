@@ -1,26 +1,30 @@
 ---
 import ProjectCard from "@/components/ProjectCard.astro";
-import type { Project } from "@/types/common";
-
-interface Props {
-  projects: Project[];
-}
-
-const { projects } = Astro.props;
+import { projects } from "@/data/projects";
 ---
 
-<div class="mt-12">
-  <div class="mb-[0.3rem]">
-    <span
-      class="text-[0.92rem] font-bold text-fg cursor-pointer no-underline inline-flex items-center gap-[0.2rem] transition-opacity duration-200 hover:opacity-70"
-      >projects ↗</span
-    >
-  </div>
-  <p class="text-[0.8rem] text-fg-muted mb-[1.2rem]">
-    stuff I built in my free time.
-  </p>
-
-  <div class="grid grid-cols-1 min-[521px]:grid-cols-2 gap-[0.6rem] mb-2">
-    {projects.map((project) => <ProjectCard {...project} />)}
-  </div>
+<!-- Section Heading -->
+<div class="mb-[0.3rem] mt-12">
+  <span
+    class="text-[0.92rem] font-bold text-fg cursor-pointer no-underline inline-flex items-center gap-[0.2rem] transition-opacity duration-200 hover:opacity-70"
+    >projects ↗</span
+  >
 </div>
+
+<!-- Section Description -->
+<p class="text-[0.8rem] text-fg-muted mb-[1.2rem]">
+  stuff I built in my free time.
+</p>
+
+<!-- Section Data -->
+<div class="grid grid-cols-1 min-[521px]:grid-cols-2 gap-[0.6rem] mb-2">
+  {projects.map((project) => <ProjectCard {project} />)}
+</div>
+
+<!-- Section Page Redirect Link -->
+<a
+  class="font-mono text-[0.72rem] text-fg-muted cursor-pointer block text-right mt-[0.8rem] no-underline transition-colors duration-200 hover:text-fg"
+  href="/projects"
+>
+  All projects ↗
+</a>

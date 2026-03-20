@@ -5,12 +5,12 @@
 
 @theme {
   /* Fonts */
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* Default Light Mode Colors */
-  --color-bg: #ebeabc; 
-  --color-fg: #384242;
+  --color-bg: #FFF;
+  --color-fg: #000;
   --color-fg-dim: #889292;
   --color-fg-muted: #5d6969;
   --color-border: #d4d3a8;
@@ -27,7 +27,11 @@
   --color-dark-code-bg: #1c1c1c;
   --color-dark-code-bar: #252525;
 
-  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Extras */
+  --color-dark-border-hover: #e8e7bb
+  --color-fg-hover: oklch(63.7% 0.237 25.331) /* bg-red-500 */
+
+  --ease-custom: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Dark Mode Colors */

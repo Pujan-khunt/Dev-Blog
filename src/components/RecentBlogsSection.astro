@@ -1,14 +1,9 @@
 ---
-import { getCollection } from "astro:content";
-
 import BlogListItem from "@/components/BlogListItem.astro";
-
-const posts = await getCollection("blog");
-const recentPosts = posts
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 4);
+import { blogs } from "@/data/blogs";
 ---
 
+<!-- Section Heading -->
 <div class="mb-[0.3rem]">
   <a
     class="text-[0.92rem] font-bold text-fg cursor-pointer no-underline inline-flex items-center gap-[0.2rem] transition-opacity duration-200 hover:opacity-70"
@@ -18,13 +13,15 @@ const recentPosts = posts
   </a>
 </div>
 
+<!-- Section Description -->
 <p class="text-[0.8rem] text-fg-muted mb-[1.2rem]">
   my thoughts and guides for stuff I forget.
 </p>
 
+<!-- Section Data -->
 <div class="mb-2">
   {
-    recentPosts.map((post) => (
+    blogs.map((post) => (
       <BlogListItem
         date={post.data.date.toLocaleDateString()}
         slug={post.slug}
@@ -35,6 +32,7 @@ const recentPosts = posts
   }
 </div>
 
+<!-- Section Page Redirect Link -->
 <a
   class="font-mono text-[0.72rem] text-fg-muted cursor-pointer block text-right mt-[0.8rem] no-underline transition-colors duration-200 hover:text-fg"
   href="/blogs"
