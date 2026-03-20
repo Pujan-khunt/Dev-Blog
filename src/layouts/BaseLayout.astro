@@ -1,5 +1,9 @@
 ---
 import "@/styles/global.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/700.css";
 
 import FooterSection from "@/components/FooterSection.astro";
 
@@ -15,34 +19,27 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" class="text-[15px]">
+<html lang="en" class="text-sm">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body
-    class="bg-(--bg) pt-20 max-w-2xl mx-auto text-(--fg) font-(--sans) leading-[1.7] antialiased min-h-screen"
+    class="bg-bg text-fg pt-20 max-w-2xl mx-auto font-sans leading-[1.7] antialiased min-h-screen"
   >
     <slot />
     <FooterSection />
     <script>
       const themeBtn = document.getElementById("theme-toggle");
-      let isLight = false;
+      let isDark = false;
 
       if (themeBtn) {
         themeBtn.addEventListener("click", () => {
-          isLight = !isLight;
-          document.body.classList.toggle("light", isLight);
-          themeBtn.textContent = isLight ? "dark" : "light";
+          isDark = !isDark;
+          document.documentElement.classList.toggle("dark", isDark);
+          themeBtn.textContent = isDark ? "dark" : "light";
         });
       }
     </script>

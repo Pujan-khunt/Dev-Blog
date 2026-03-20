@@ -1,42 +1,26 @@
 ---
 import ProjectCard from "@/components/ProjectCard.astro";
+import type { Project } from "@/types/common";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
 ---
 
-<div class="mt-12 animate-[fadeUp_0.4s_cubic-bezier(.4,0,.2,1)_both_0.2s]">
+<div class="mt-12">
   <div class="mb-[0.3rem]">
     <span
-      class="text-[0.92rem] font-bold text-(--fg) cursor-pointer no-underline inline-flex items-center gap-[0.2rem] transition-opacity duration-200 hover:opacity-70"
+      class="text-[0.92rem] font-bold text-fg cursor-pointer no-underline inline-flex items-center gap-[0.2rem] transition-opacity duration-200 hover:opacity-70"
       >projects ↗</span
     >
   </div>
-  <p class="text-[0.8rem] text-(--fg-muted) mb-[1.2rem]">
+  <p class="text-[0.8rem] text-fg-muted mb-[1.2rem]">
     stuff I built in my free time.
   </p>
 
   <div class="grid grid-cols-1 min-[521px]:grid-cols-2 gap-[0.6rem] mb-2">
-    <ProjectCard
-      title="Redis Lite"
-      summary="Custom Implementation of Redis in Go. Performance: p50 => ~0.13ms"
-      type="golang"
-      href="https://github.com/Pujan-khunt/redis-lite"
-    />
-    <ProjectCard
-      title="Clipboard Synchronizer"
-      summary="Cross Platform, P2P and Encrypted Clipboard Synchronization Tool."
-      type="golang"
-      href="https://github.com/Pujan-khunt/clipboard-sync"
-    />
-    <ProjectCard
-      title="Authentication System"
-      summary="User Authentication System With Registration, Login and Security Management."
-      type="javascript"
-      href="https://github.com/Pujan-khunt/Authentication-System"
-    />
-    <ProjectCard
-      title="Personal Website (current)"
-      summary="Know more about me here. I write blogs and share my learnings."
-      type="astro"
-      href="https://github.com/Pujan-khunt/Dev-Blog"
-    />
+    {projects.map((project) => <ProjectCard {...project} />)}
   </div>
 </div>

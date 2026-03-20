@@ -13,12 +13,10 @@ interface Props {
 const { resumeHref, bio, greeting, quote, profileImage } = Astro.props;
 ---
 
-<div
-  class="flex items-start gap-5 mb-4 animate-[fadeUp_0.4s_cubic-bezier(.4,0,.2,1)_both_0.05s]"
->
+<div class="flex items-start gap-5 mb-4">
   <div class="flex-1 pr-4">
     <p class="text-[1.1rem] font-bold mb-2">{greeting}</p>
-    <p class="text-[0.88rem] text-(--fg-muted) leading-[1.85]">{bio}</p>
+    <p class="text-[0.88rem] text-fg-muted leading-[1.85]">{bio}</p>
     <p class="text[0.9rem font-bold] mt-4">
       {quote}
     </p>
