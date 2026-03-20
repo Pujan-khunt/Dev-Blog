@@ -9,27 +9,14 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* Default Light Mode Colors */
-  --color-bg: #FFF;
-  --color-fg: #000;
+  --color-bg: #F8F9FA;
+  --color-fg: #212529;
   --color-fg-dim: #889292;
-  --color-fg-muted: #5d6969;
+  --color-fg-muted: #495057;
   --color-border: #d4d3a8;
-  --color-code-bg: #e1e0b2;
-  --color-code-bar: #d4d3a8;
 
-  /* Dark Mode Colors Defined For Easier Access */
-  /* Now these are accessible as CSS variables and Tailwind utility classes. */
-  --color-dark-bg: #111;
-  --color-dark-fg: #e2e2e2;
-  --color-dark-fg-dim: #666;
-  --color-dark-fg-muted: #999;
-  --color-dark-border: #333;
-  --color-dark-code-bg: #1c1c1c;
-  --color-dark-code-bar: #252525;
-
-  /* Extras */
-  --color-dark-border-hover: #e8e7bb
-  --color-fg-hover: oklch(63.7% 0.237 25.331) /* bg-red-500 */
+  /* Extras (Light) */
+  --color-border-hover: #000;
 
   --ease-custom: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -37,13 +24,14 @@
 /* Dark Mode Colors */
 /* Applied when HTML has the .dark class */
 .dark {
-  --color-bg: #111;
+  --color-bg: #111; 
   --color-fg: #e2e2e2;
   --color-fg-dim: #666;
   --color-fg-muted: #999;
   --color-border: #333;
-  --color-code-bg: #1c1c1c;
-  --color-code-bar: #252525;
+
+  /* Extras (Dark) */
+  --color-border-hover: #AAA;
 }
 
 *,
@@ -51,3 +39,5 @@
 *::after {
   box-sizing: border-box;
 }
+
+

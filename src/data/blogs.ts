@@ -1,5 +1,5 @@
 import { getCollection } from "astro:content";
-import type { Blog } from "@/types.ts";
+import type { Blog } from "@/types";
 
 const posts = await getCollection("blog");
 

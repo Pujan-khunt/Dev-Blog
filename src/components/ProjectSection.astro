@@ -1,20 +1,25 @@
 ---
 import ProjectCard from "@/components/ProjectCard.astro";
+
+import SectionHeading from "@/components/SectionHeading.astro";
+import SectionDescription from "@/components/SectionDescription.astro";
+import SectionRedirectLink from "@/components/SectionRedirectLink.astro";
+
 import { projects } from "@/data/projects";
 ---
 
 <!-- Section Heading -->
-<div class="mb-[0.3rem] mt-12">
-  <span
-    class="text-[0.92rem] font-bold text-fg cursor-pointer no-underline inline-flex items-center gap-[0.2rem] transition-opacity duration-200 hover:opacity-70"
-    >projects ↗</span
-  >
-</div>
+<SectionHeading
+  className="mb-[0.3rem] mt-12"
+  label="projects"
+  href="/projects"
+/>
 
 <!-- Section Description -->
-<p class="text-[0.8rem] text-fg-muted mb-[1.2rem]">
-  stuff I built in my free time.
-</p>
+<SectionDescription
+  className="mb-[1.2rem]"
+  description="stuff I built in my free time."
+/>
 
 <!-- Section Data -->
 <div class="grid grid-cols-1 min-[521px]:grid-cols-2 gap-[0.6rem] mb-2">
@@ -22,9 +27,8 @@ import { projects } from "@/data/projects";
 </div>
 
 <!-- Section Page Redirect Link -->
-<a
-  class="font-mono text-[0.72rem] text-fg-muted cursor-pointer block text-right mt-[0.8rem] no-underline transition-colors duration-200 hover:text-fg"
+<SectionRedirectLink
+  className="mt-[0.8rem]"
   href="/projects"
->
-  All projects ↗
-</a>
+  label="All projects"
+/>

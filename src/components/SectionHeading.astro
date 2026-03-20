@@ -1,0 +1,21 @@
+---
+import { twMerge } from "tailwind-merge";
+
+interface Props {
+  href: string;
+  label: string;
+  className: string;
+}
+
+const { href, label, className } = Astro.props;
+---
+
+<a
+  class={twMerge(
+    className,
+    "text-[0.92rem] font-bold text-fg cursor-pointer no-underline inline-flex items-center gap-[0.2rem] transition-opacity duration-200 hover:opacity-70",
+  )}
+  {href}
+>
+  {label} ↗
+</a>
