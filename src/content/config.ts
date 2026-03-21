@@ -1,9 +1,10 @@
-import type { CollectionConfig } from "astro/content/config";
+import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
 const blogSchema = z.object({
   title: z.string(),
   date: z.coerce.date(),
+  slug: z.string(),
   heroImage: z
     .object({
       src: z.string(),
@@ -15,11 +16,12 @@ const blogSchema = z.object({
   readingTime: z.string(),
 });
 
-const blogCollectionConfig: CollectionConfig<typeof blogSchema> = {
-  type: "content",
-  schema: blogSchema,
-};
 
-const blogCollection = defineCollection(blogCollectionConfig);
+const blogCollection = defineCollection({
+  schema: blogSchema,
+  // glob() loader generates an `id` field for each file based on the filename (in an URL friendly format)
+  // This `id` field can be overriden by adding a `slug` field in the frontmatter.
+  loader: glob({ base: "./src/content/blog", pattern: "**/*.md" })
+});
 
 export const collections = { blog: blogCollection };

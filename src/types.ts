@@ -1,5 +1,5 @@
 import type { ImageMetadata } from "astro";
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry, InferEntrySchema } from "astro:content";
 
 export type Project = {
   title: string;
@@ -21,4 +21,6 @@ export type Author = {
   quote: string;
 };
 
-export type Blog = CollectionEntry<"blog">;
+export type BlogEntry = CollectionEntry<"blog">;
+
+export type Blog = InferEntrySchema<"blog">;

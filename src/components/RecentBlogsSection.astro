@@ -5,7 +5,7 @@ import SectionHeading from "@/components/SectionHeading.astro";
 import SectionDescription from "@/components/SectionDescription.astro";
 import SectionRedirectLink from "@/components/SectionRedirectLink.astro";
 
-import { blogs } from "@/data/blogs";
+import { recentBlogs } from "@/data/blogs";
 ---
 
 <!-- Section Heading -->
@@ -19,16 +19,7 @@ import { blogs } from "@/data/blogs";
 
 <!-- Section Data -->
 <div class="mb-2">
-  {
-    blogs.map((post) => (
-      <BlogListItem
-        date={post.data.date.toLocaleDateString()}
-        slug={post.slug}
-        title={post.data.title}
-        readingTime={post.data.readingTime}
-      />
-    ))
-  }
+  {recentBlogs.map((blog) => <BlogListItem {blog} />)}
 </div>
 
 <!-- Section Page Redirect Link -->
