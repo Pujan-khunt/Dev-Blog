@@ -1,9 +1,20 @@
 ---
+import { twMerge } from "tailwind-merge";
+
 const currentYear = new Date().getFullYear();
+
+interface Props {
+  className?: string;
+}
+
+const { className } = Astro.props;
 ---
 
 <footer
-  class="mt-16 pt-6 pb-10 flex justify-between items-center border-t border-border"
+  class={twMerge(
+    className,
+    "pt-6 pb-10 flex justify-between items-center border-t border-border",
+  )}
 >
   <span class="font-mono text-[0.68rem] text-fg-dim"
     >© {currentYear} pujankhunt</span

@@ -30,10 +30,12 @@ const {
     <meta name="description" content={description} />
   </head>
   <body
-    class="bg-bg text-fg pt-16 px-8 sm:pt-20 max-w-3xl mx-auto font-sans leading-[1.7] antialiased min-h-screen"
+    class="bg-bg text-fg pt-16 px-8 sm:pt-20 max-w-3xl mx-auto font-sans leading-[1.7] antialiased min-h-screen flex flex-col"
   >
-    <slot />
-    <FooterSection />
+    <div class="flex-1">
+      <slot />
+    </div>
+    <FooterSection className="mt-12" />
     <script src="../theme-toggler.min.js"></script>
   </body>
 </html>

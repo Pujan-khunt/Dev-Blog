@@ -8,17 +8,17 @@ export default defineConfig({
     themes: ["github-dark", "github-light"],
     useDarkModeMediaQuery: false,
     themeCssSelector: (theme) => theme.type === "dark" ? ".dark" : ":root:not(.dark)",
+    useThemedScrollbars: false,
+    useThemedSelectionColors: false,
+    emitExternalStylesheet: false,
     defaultProps: {
       showLineNumbers: true,
       wrap: false,
     },
-    // styleOverrides: {
-    //   borderRadius: "0",
-    //   codeFontFamily: "JetBrains Mono, ui-monospace, monospace",
-    //   codeFontSize: "0.8rem",
-    //   borderColor: "var(--color-border)",
-    // },
   })],
+  build: {
+    inlineStylesheets: "always"
+  },
   vite: {
     plugins: [tailwindcss()],
   },
