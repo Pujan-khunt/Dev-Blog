@@ -11,7 +11,7 @@ export default defineConfig({
     // Prevents FOUC by inlining the stylesheets(CSS) onto HTML.
     emitExternalStylesheet: false,
     defaultProps: {
-      showLineNumbers: true,
+      showLineNumbers: false,
       wrap: false,
     },
   })],
