@@ -13,7 +13,8 @@ function shortDate(date: Date): string {
 }
 ---
 
-<div
+<a
+  href={`/blogs/${blog.data.slug}`}
   class="grid grid-cols-[5.5rem_1fr] min-[521px]:grid-cols-[5rem_1fr_auto] gap-x-4 gap-y-[0.3rem] items-baseline py-[0.65rem] px-2 border-b border-border first:border-t cursor-pointer transition-[padding-left] duration-200 ease-ease hover:pl-4"
 >
   <span
@@ -21,15 +22,14 @@ function shortDate(date: Date): string {
   >
     {shortDate(blog.data.date)}
   </span>
-  <a
-    href={`/blogs/${blog.data.slug}`}
+  <div
     class="text-[0.88rem] font-medium text-fg decoration-0 duration-200 ease-ease"
   >
     {blog.data.title}
-  </a>
+  </div>
   <span
     class="font-mono font-medium text-[0.7rem] text-fg-dim whitespace-nowrap text-right hidden min-[521px]:block"
   >
     {blog.data.readingTime}
   </span>
-</div>
+</a>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogListItem from "@/components/BlogListItem.astro";
+import GoBackLink from "@/components/GoBackLink.astro";
 
 import { blogsByYear, years } from "@/data/blogs";
 ---
@@ -9,18 +10,16 @@ import { blogsByYear, years } from "@/data/blogs";
   title="writings · pujankhunt"
   description="All blog posts by Pujan Khunt."
 >
-  <a
-    href="/"
-    class="font-mono text-[0.75rem] text-fg-muted mb-10 inline-block transition-[color,transform] duration-200 hover:text-fg hover:-translate-x-0.5"
-  >
-    ↖ home
-  </a>
+  <!-- Back to Home Link -->
+  <GoBackLink href="/" label="home" />
 
+  <!-- Heading -->
   <p class="text-[0.92rem] font-bold mb-1">writings</p>
   <p class="text-[0.8rem] text-fg-muted mb-8">
     my thoughts and guides for stuff I forget.
   </p>
 
+  <!-- Blogs Sorted Year Wise -->
   {
     years.map((year) => (
       <div class="mb-8">
@@ -34,6 +33,7 @@ import { blogsByYear, years } from "@/data/blogs";
     ))
   }
 
+  <!-- The End -->
   <p class="font-mono text-[0.72rem] text-fg-dim text-center pt-2 pb-1">
     that's all.
   </p>

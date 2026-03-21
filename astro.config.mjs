@@ -8,8 +8,7 @@ export default defineConfig({
     themes: ["github-dark", "github-light"],
     useDarkModeMediaQuery: false,
     themeCssSelector: (theme) => theme.type === "dark" ? ".dark" : ":root:not(.dark)",
-    useThemedScrollbars: false,
-    useThemedSelectionColors: false,
+    // Prevents FOUC by inlining the stylesheets(CSS) onto HTML.
     emitExternalStylesheet: false,
     defaultProps: {
       showLineNumbers: true,

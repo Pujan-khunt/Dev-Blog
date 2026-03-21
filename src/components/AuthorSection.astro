@@ -2,11 +2,23 @@
 import { author } from "@/data/author";
 import { Image } from "astro:assets";
 import Download from "@/svg/Download.astro";
+import { twMerge } from "tailwind-merge";
+
+interface Props {
+  className: string;
+}
+
+const { className } = Astro.props;
 ---
 
-<div class="flex items-start gap-4 sm:gap-5 mb-10">
+<div
+  class={twMerge(
+    className,
+    "flex flex-col-reverse sm:flex-row items-center gap-4",
+  )}
+>
   <!-- Author Information -->
-  <div class="flex-1 sm:pr-4">
+  <div class="flex flex-col items-center sm:items-start px-4 sm:px-0 sm:pr-6">
     <!-- Greeting -->
     <p class="text-[1.1rem] font-bold mb-2">{author.greeting}</p>
 
@@ -14,7 +26,7 @@ import Download from "@/svg/Download.astro";
     <p class="text-[0.88rem] text-fg-muted leading-[1.85]">{author.bio}</p>
 
     <!-- Quote -->
-    <p class="text-[0.9rem] mt-4">{author.quote}</p>
+    <i class="text-[0.9rem] mt-4">{author.quote}</i>
   </div>
 
   <!-- Author Profile Picture + Resume -->
@@ -27,16 +39,14 @@ import Download from "@/svg/Download.astro";
     <Image
       priority={true}
       src={author.profileImage}
-      width={176}
-      height={176}
-      class="w-40 h-40 min-w-40 sm:w-44 sm:h-44 sm:min-w-44 rounded-t-2xl object-cover"
+      class="w-40 h-40 min-w-40 sm:w-42 sm:h-42 sm:min-w-42 rounded-2xl sm:rounded-b-none object-cover"
       alt="Pujan Khunt"
       id="home-avatar"
     />
 
     <!-- Resume Button -->
     <div
-      class="flex items-center justify-center rounded-b-2xl gap-[0.4rem] font-mono text-[0.65rem] sm:text-[0.72rem] tracking-[0.04em] no-underline py-2 px-[0.65rem] transition-all duration-200 ease-ease w-full"
+      class="hidden sm:flex items-center justify-center rounded-b-2xl gap-[0.4rem] font-mono text-[0.65rem] sm:text-[0.72rem] tracking-[0.04em] no-underline py-2 px-[0.65rem] transition-all duration-200 ease-ease w-full"
     >
       <Download />
       resume.pdf

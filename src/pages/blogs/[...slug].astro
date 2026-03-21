@@ -1,8 +1,10 @@
 ---
 import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
 import type { GetStaticPaths } from "astro";
-import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { BlogEntry } from "@/types";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GoBackLink from "@/components/GoBackLink.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getCollection("blog");
@@ -32,18 +34,13 @@ function formatDate(d: Date): string {
 ---
 
 <BaseLayout title={`${title} · pujankhunt`} description={title}>
-  <!-- Back link -->
-  <a
-    href="/blogs"
-    class="font-mono text-[0.75rem] text-fg-muted mb-10 inline-block transition-[color,transform] duration-200 hover:text-fg hover:-translate-x-0.5"
-  >
-    ↖ posts
-  </a>
+  <!-- Back to Blogs Link -->
+  <GoBackLink href="/blogs" label="blogs" />
 
   <!-- Hero image -->
   {
     heroImage && (
-      <img
+      <Image
         src={heroImage.src}
         alt={heroImage.alt}
         class="w-full aspect-16/7 object-cover rounded-sm border border-border mb-8 block"
