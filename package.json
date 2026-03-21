@@ -9,17 +9,21 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@expressive-code/plugin-line-numbers": "^0.41.7",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.5",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
+    "sharp": "^0.34.5",
+    "shiki": "^4.0.2",
+    "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@fontsource/inter": "^5.2.8",
-    "@fontsource/jetbrains-mono": "^5.2.8",
-    "sharp": "^0.34.5",
-    "tailwind-merge": "^3.5.0"
+    "astro-expressive-code": "^0.41.7"
   }
 }
