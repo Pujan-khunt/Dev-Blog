@@ -1,0 +1,20 @@
+# Default rule for all files
+# Forces the browser to check with the server to see if a new version exists
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Astro's hashed assets
+# Safely cached for 1 year because the filename changes if the content changes
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Static public assets (Favicons, manifests, etc.)
+# Cached for 1 day since these filenames do not contain hashes
+/*.ico
+  Cache-Control: public, max-age=86400
+/*.svg
+  Cache-Control: public, max-age=86400
+/*.png
+  Cache-Control: public, max-age=86400
+/*.webmanifest
+  Cache-Control: public, max-age=86400
