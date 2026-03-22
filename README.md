@@ -12,5 +12,5 @@ the `slug` field in the frontmatter.
 
 1. Move `data/` from local files to Astro's Content Collection to act as a Local Database.
 2. Project page showcasing all projects briefly
-3. static and prerendered blog page for a single blog
-4. static and prerendered project page for a single project
+3. static and prerendered project page for a single project
+4. Create a proper favicon with monochrome color scheme.
