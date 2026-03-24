@@ -3,18 +3,18 @@ import BlogListItem from "@/components/BlogListItem.astro";
 
 import SectionHeading from "@/components/SectionHeading.astro";
 import SectionDescription from "@/components/SectionDescription.astro";
-import SectionRedirectLink from "@/components/SectionRedirectLink.astro";
+import RedirectLink from "@/components/RedirectLink.astro";
 
 import { recentBlogs } from "@/data/blogs";
 ---
 
 <!-- Section Heading -->
-<SectionHeading label="Writings" href="/blogs" className="mb-[0.3rem]" />
+<SectionHeading label="Blogs" href="/blogs" className="mb-1" />
 
 <!-- Section Description -->
 <SectionDescription
-  className="mb-[1.2rem]"
-  description="my thoughts and guides for stuff I forget."
+  className="mb-5"
+  description="Thoughts and learnings as I explore and build."
 />
 
 <!-- Section Data -->
@@ -23,8 +23,4 @@ import { recentBlogs } from "@/data/blogs";
 </div>
 
 <!-- Section Page Redirect Link -->
-<SectionRedirectLink
-  className="mt-[0.8rem]"
-  href="/blogs"
-  label="All writings"
-/>
+<RedirectLink href="/blogs" label="All writings" arrowPosition="right" />

@@ -30,6 +30,9 @@ importers:
       astro:
         specifier: ^6.0.8
         version: 6.0.8(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.59.1)(typescript@5.9.3)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       prettier:
         specifier: ^3.8.1
         version: 3.8.1

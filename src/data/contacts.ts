@@ -14,7 +14,7 @@ export const contacts: Contact[] = [
     href: "https://www.linkedin.com/in/pujan-khunt-40246425b/",
   },
   {
-    label: "pujankhunt2412@gmail.com",
+    label: "Email",
     href: "mailto:pujankhunt2412@gmail.com",
   },
 ];

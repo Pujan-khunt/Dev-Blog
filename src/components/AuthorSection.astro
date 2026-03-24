@@ -18,15 +18,15 @@ const { className } = Astro.props;
   )}
 >
   <!-- Author Information -->
-  <div class="flex flex-col items-center sm:items-start px-4 sm:px-0 sm:pr-6">
+  <div class="flex flex-col items-center sm:items-start sm:px-0 sm:pr-6">
     <!-- Greeting -->
-    <p class="text-[1.1rem] font-bold mb-2">{author.greeting}</p>
+    <p class="text-2xl font-bold mb-2">{author.greeting}</p>
 
     <!-- Bio -->
-    <p class="text-[0.88rem] text-fg-muted leading-[1.85]">{author.bio}</p>
+    <p class="text-sm text-fg-muted leading-7">{author.bio}</p>
 
     <!-- Quote -->
-    <i class="text-[0.9rem] mt-4">{author.quote}</i>
+    <i class="text-sm mt-4">{author.quote}</i>
   </div>
 
   <!-- Author Profile Picture + Resume -->
@@ -47,7 +47,7 @@ const { className } = Astro.props;
 
     <!-- Resume Button -->
     <div
-      class="hidden sm:flex items-center justify-center rounded-b-2xl gap-[0.4rem] font-mono text-[0.65rem] sm:text-[0.72rem] tracking-[0.04em] no-underline py-2 px-[0.65rem] transition-all duration-200 ease-ease w-full"
+      class="hidden sm:flex sm:items-center sm:justify-center rounded-b-2xl gap-1.5 font-mono sm:text-xs py-2 transition-all duration-200 ease-ease w-full"
     >
       <Download />
       resume.pdf

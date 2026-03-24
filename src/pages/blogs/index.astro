@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogListItem from "@/components/BlogListItem.astro";
-import GoBackLink from "@/components/GoBackLink.astro";
+import RedirectLink from "@/components/RedirectLink.astro";
 
 import { blogsByYear, years } from "@/data/blogs";
 ---
@@ -11,19 +11,19 @@ import { blogsByYear, years } from "@/data/blogs";
   description="All blog posts by Pujan Khunt."
 >
   <!-- Back to Home Link -->
-  <GoBackLink href="/" label="home" />
+  <RedirectLink href="/" label="home" className="mb-4" arrowPosition="left" />
 
   <!-- Heading -->
-  <p class="text-[0.92rem] font-bold mb-1">writings</p>
-  <p class="text-[0.8rem] text-fg-muted mb-8">
-    my thoughts and guides for stuff I forget.
+  <p class="font-bold mb-1">Writings</p>
+  <p class="text-sm text-fg-muted mb-8">
+    Thoughts and learnings as I explore and build.
   </p>
 
   <!-- Blogs Sorted Year Wise -->
   {
     years.map((year) => (
       <div class="mb-8">
-        <p class="text-[0.88rem] font-bold text-fg-muted mb-3">{year}</p>
+        <p class="text-sm font-bold text-fg-muted mb-3">{year}</p>
         <div>
           {blogsByYear[year].map((blog) => (
             <BlogListItem {blog} />
@@ -34,7 +34,5 @@ import { blogsByYear, years } from "@/data/blogs";
   }
 
   <!-- The End -->
-  <p class="font-mono text-[0.72rem] text-fg-dim text-center pt-2 pb-1">
-    that's all.
-  </p>
+  <p class="font-mono text-sm text-fg-dim text-center pt-2 pb-1">that's all.</p>
 </BaseLayout>

@@ -9,6 +9,6 @@ interface Props {
 const { description, className } = Astro.props;
 ---
 
-<p class={twMerge(className, "text-[0.8rem] text-fg-muted")}>
+<p class={twMerge(className, "text-sm text-fg-muted")}>
   {description}
 </p>

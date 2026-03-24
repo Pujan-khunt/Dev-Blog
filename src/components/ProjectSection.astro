@@ -3,32 +3,33 @@ import ProjectCard from "@/components/ProjectCard.astro";
 
 import SectionHeading from "@/components/SectionHeading.astro";
 import SectionDescription from "@/components/SectionDescription.astro";
-import SectionRedirectLink from "@/components/SectionRedirectLink.astro";
+import RedirectLink from "@/components/RedirectLink.astro";
 
 import { projects } from "@/data/projects";
 ---
 
 <!-- Section Heading -->
 <SectionHeading
-  className="mb-[0.3rem] mt-8 sm:mt-12"
+  className="mb-1 mt-8 sm:mt-12"
   label="Projects"
   href="/projects"
 />
 
 <!-- Section Description -->
 <SectionDescription
-  className="mb-[1.2rem]"
+  className="mb-5"
   description="stuff I built in my free time."
 />
 
 <!-- Section Data -->
-<div class="grid grid-cols-1 min-[521px]:grid-cols-2 gap-[0.6rem] mb-2">
+<div class="grid grid-cols-1 min-[521px]:grid-cols-2 gap-3 mb-2">
   {projects.map((project) => <ProjectCard {project} />)}
 </div>
 
 <!-- Section Page Redirect Link -->
-<SectionRedirectLink
-  className="mt-[0.8rem]"
+<RedirectLink
+  className="mt-2"
   href="/projects"
   label="All projects"
+  arrowPosition="right"
 />

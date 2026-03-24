@@ -4,10 +4,10 @@ import { contacts } from "@/data/contacts";
 ---
 
 <!-- Section Heading -->
-<p class="text-[0.92rem] font-bold mb-[0.4rem] mt-8 sm:mt-12">contact</p>
+<p class="font-bold mb-2 mt-8 sm:mt-12">Contact</p>
 
 <!-- Section Data -->
-<p class="text-[0.82rem] text-fg-muted leading-[1.9]">
+<p class="text-fg-muted text-sm leading-6">
   connect with me on
 
   {
@@ -16,11 +16,11 @@ import { contacts } from "@/data/contacts";
         <ContactItem {contact} />
 
         {index < contacts.length - 2 && (
-          <span class="mx-[0.3rem] text-fg-dim">·</span>
+          <span class="m-0.5 text-fg-dim">·</span>
         )}
 
         {index === contacts.length - 2 && (
-          <>&nbsp;or reach out to me at&nbsp;</>
+          <>&nbsp;or reach out to me at my&nbsp;</>
         )}
       </>
     ))
