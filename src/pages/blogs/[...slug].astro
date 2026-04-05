@@ -45,11 +45,16 @@ function formatDate(d: Date): string {
   <!-- Hero image -->
   {
     heroImage && (
-      <Image
-        src={heroImage.src}
-        alt={heroImage.alt}
-        class="w-full aspect-16/7 object-cover rounded-sm border border-border mb-8 block"
-      />
+      <div class="xs:mb-0 mb-4 sm:mb-6 md:mb-8 lg:mb-0 rounded-sm overflow-hidden">
+        <Image
+          src={heroImage.src}
+          alt={heroImage.alt}
+          width={heroImage.src.width}
+          height={heroImage.src.height}
+          class="h-[40vh] min-h-50 md:h-[50vh] lg:h-[60vh] object-contain"
+          loading="eager"
+        />
+      </div>
     )
   }
 
@@ -59,14 +64,20 @@ function formatDate(d: Date): string {
   </h1>
 
   <!-- Meta -->
-  <p class="font-mono text-sm text-fg-dim mb-2">
+  <p class="font-mono text-sm text-fg-dim mb-4">
     {formatDate(date)}<span class="mx-2">·</span>{readingTime}
   </p>
+
+  <!-- Article body -->
+  <div class="prose-sm prose dark:prose-invert max-w-none mb-4">
+    <Content />
+  </div>
 
   <!-- Tags -->
   {
     tags.length > 0 && (
-      <div class="flex gap-x-2 flex-wrap mb-10">
+      <div class="flex flex-wrap items-baseline gap-x-2 gap-y-2 font-mono text-sm text-fg-muted mb-4">
+        <span>Tags:</span>
         {tags.map((tag) => (
           <span class="font-mono text-xs text-fg-dim border border-[#2e2e2e] py-1 px-2 rounded-xs">
             {tag}
@@ -75,11 +86,6 @@ function formatDate(d: Date): string {
       </div>
     )
   }
-
-  <!-- Article body -->
-  <div class="prose-sm prose dark:prose-invert max-w-none">
-    <Content />
-  </div>
 
   <p class="font-mono text-sm text-fg-dim text-center pt-6 pb-1">that's all.</p>
 </BaseLayout>
