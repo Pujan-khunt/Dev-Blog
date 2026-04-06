@@ -1,9 +1,15 @@
 ---
 import "@/global.css";
+
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/700.css";
 import "@fontsource/jetbrains-mono/400.css";
+
+import interUrl400 from "@fontsource/inter/files/inter-latin-400-normal.woff2?url"
+import interUrl500 from "@fontsource/inter/files/inter-latin-500-normal.woff2?url"
+import interUrl700 from "@fontsource/inter/files/inter-latin-700-normal.woff2?url"
+import jetbrainUrl400 from "@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2?url"
 
 import FooterSection from "@/components/FooterSection.astro";
 
@@ -36,6 +42,12 @@ const {
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Pujan's Site" />
     <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Preloading fonts -->
+    <link rel="preload" href={interUrl400} as="font" type="font/woff2" crossorigin="anonymous"/>
+    <link rel="preload" href={interUrl500} as="font" type="font/woff2" crossorigin="anonymous"/>
+    <link rel="preload" href={interUrl700} as="font" type="font/woff2" crossorigin="anonymous"/>
+    <link rel="preload" href={jetbrainUrl400} as="font" type="font/woff2" crossorigin="anonymous"/>
   </head>
   <body
     class="bg-bg text-fg pt-10 px-6 sm:pt-20 max-w-2xl mx-auto font-sans leading-6 antialiased min-h-screen flex flex-col"
