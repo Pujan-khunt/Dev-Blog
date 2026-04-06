@@ -25,7 +25,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="bg-bg text-fg">
   <head>
     <!-- Inline script (NO using src) for FOUC prevention -->
     <!-- prettier-ignore -->
@@ -52,11 +52,13 @@ const {
   <body
     class="bg-bg text-fg pt-10 px-6 sm:pt-20 max-w-2xl mx-auto font-sans leading-6 antialiased min-h-screen flex flex-col"
   >
-    <div class="flex-1">
+    <main class="flex-1">
       <slot />
-    </div>
+    </main>
+
     <FooterSection className="mt-12" />
-    <script src="../theme-toggler.min.js"></script>
-    <script is:inline async data-collect-dnt="true" src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+
+    <!-- prettier-ignore -->
+    <script is:inline>const k="theme",r=document.documentElement,b=document.getElementById("theme-toggle"),g=()=>localStorage.getItem(k)||"dark",a=t=>(r.classList.toggle("dark",t==="dark"),b.textContent=t==="dark"?"light":"dark"),s=t=>(localStorage.setItem(k,t),a(t)),t=()=>s(g()==="dark"?"light":"dark");a(g());b.onclick=t;</script>
   </body>
 </html>
