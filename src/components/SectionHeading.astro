@@ -11,13 +11,15 @@ interface Props {
 const { href, label, className } = Astro.props;
 ---
 
-<a
-  class={twMerge(
-    className,
-    "font-bold text-fg cursor-pointer no-underline items-center transition-opacity duration-200 hover:opacity-70 flex",
-  )}
-  {href}
->
-  {label}
-  <TopRightArrow className="w-4 h-4" />
-</a>
+<h2>
+  <a
+    class={twMerge(
+      className,
+      "font-bold text-fg cursor-pointer no-underline items-center transition-opacity duration-200 hover:opacity-70 flex",
+    )}
+    {href}
+  >
+    {label}
+    <TopRightArrow className="w-4 h-4" />
+  </a>
+</h2>
