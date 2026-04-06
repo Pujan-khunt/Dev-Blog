@@ -11,7 +11,7 @@
   /* Light mode */
   --color-bg: #f8f9fa;
   --color-fg: #212529;
-  --color-fg-dim: #889292;
+  --color-fg-dim: #6b7280;
   --color-fg-muted: #495057;
   --color-border: #d4d3a8;
   --color-border-hover: #000;
@@ -22,8 +22,8 @@
 .dark {
   --color-bg: #111;
   --color-fg: #e2e2e2;
-  --color-fg-dim: #666;
-  --color-fg-muted: #999;
+  --color-fg-dim: #8c8c8c;
+  --color-fg-muted: #a3a3a3;
   --color-border: #333;
   --color-border-hover: #aaa;
 }
