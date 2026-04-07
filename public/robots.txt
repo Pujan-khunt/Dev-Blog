@@ -27,3 +27,5 @@ Disallow: /
 
 User-agent: meta-externalagent
 Disallow: /
+
+Sitemap: https://pujankhunt.me/sitemap-index.xml

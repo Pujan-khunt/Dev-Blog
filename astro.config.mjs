@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import astroExpressiveCode from "astro-expressive-code";
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://pujankhunt.me",
@@ -14,7 +15,7 @@ export default defineConfig({
       showLineNumbers: false,
       wrap: false,
     },
-  })],
+  }), sitemap()],
   build: {
     inlineStylesheets: "always"
   },
