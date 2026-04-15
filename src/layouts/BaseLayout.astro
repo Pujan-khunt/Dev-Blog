@@ -1,4 +1,6 @@
 ---
+import { SEO } from "astro-seo";
+
 import "@/global.css";
 
 import "@fontsource/inter/400.css";
@@ -14,19 +16,21 @@ import jetbrainUrl400 from "@fontsource/jetbrains-mono/files/jetbrains-mono-lati
 import FooterSection from "@/components/FooterSection.astro";
 
 interface Props {
-  title?: string;
-  description?: string;
+  title: string;
+  description: string;
 }
 
 const {
-  title = "Pujan's Developer Blog",
-  description = "My thoughts and guides for stuff I forget.",
+  title,
+  description,
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="bg-bg text-fg">
   <head>
+    <SEO {title} {description}/> 
+
     <!-- Inline script (NO using src) for FOUC prevention -->
     <!-- prettier-ignore -->
     <script is:inline>!function(d,t){d.classList.toggle("dark",t!=="light")}(document.documentElement,localStorage.getItem("theme"));</script>
